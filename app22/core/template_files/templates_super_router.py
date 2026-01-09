@@ -4,9 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Column
 from app22.db_core.db_async import async_db
 
-from app22.core.templates_schema import Resp, Create, Get, OrderbyList
-from app22.core.templates_async_crud import templatesDB
-from app22.core.templates_model import TableName
+from app22.core.template_files.templates_schema import Resp, Create, Get, OrderbyList
+from app22.core.template_files.templates_async_crud import templatesDB
+from app22.core.template_files.templates_model import TableName
 
 
 logFC = ConfigLogger.getLogger("FileStdout", "templates_router")

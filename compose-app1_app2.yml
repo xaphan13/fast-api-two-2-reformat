@@ -54,22 +54,22 @@ services:
             - LOG_FILE=celery_fast2_11.log
 
 #----------------------------------------------------------------------------------
-    celery_two:
-        container_name: celery_two_new
-        build:
-            context: .
-            dockerfile: ./app22/Docker-app22-celery
-        command: ['celery', '-A', 'celery_tasks.celery_worker.celery', 'worker', '-l', 'info', '-f', 'log/celery22.log']
-        networks:
-            my_network:
-                ipv4_address: 172.20.0.32
-        volumes:
-            - ${PATH_LOG_CELERY22}:/app22/log
-        env_file:
-            - ./app22/dock_app2.env
-        environment:
-            - LOG_DIR=./log
-            - LOG_FILE=celery_fast2_22.log
+#    celery_two:
+#        container_name: celery_two_new
+#        build:
+#            context: .
+#            dockerfile: ./app22/Docker-app22-celery
+#        command: ['celery', '-A', 'celery_tasks.celery_worker.celery', 'worker', '-l', 'info', '-f', 'log/celery22.log']
+#        networks:
+#            my_network:
+#                ipv4_address: 172.20.0.32
+#        volumes:
+#            - ${PATH_LOG_CELERY22}:/app22/log
+#        env_file:
+#            - ./app22/dock_app2.env
+#        environment:
+#            - LOG_DIR=./log
+#            - LOG_FILE=celery_fast2_22.log
 
 #----------------------------------------------------------------------------------
 networks:

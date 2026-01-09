@@ -2,8 +2,8 @@ from app22.logger_core.config_logger import ConfigLogger
 import uvicorn
 
 from app22.core import get_app_fastapi
-from app22.new_routers.router_api_request import api_request
-from app22.new_routers.router_new_tasks import new_router
+from app22.http_request_routers.router_api_request import api_request
+# from app22.http_request_routers.router_new_tasks import new_router
 from app22.async_many_sql.router_crud_many import new_many_crud
 from app22.async_many_sql.router_many_async_one import new_many_async_one
 from app22.async_many_sql.router_many_async_two import new_many_async_two
@@ -20,7 +20,7 @@ app = get_app_fastapi()  # FastAPI()  # app = FastAPI()
 
 
 # подключаем здесь все роутеры
-app.include_router(new_router)
+# app.include_router(new_router)
 app.include_router(api_request)
 app.include_router(new_many_crud)
 app.include_router(new_many_async_one)

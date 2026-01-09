@@ -1,15 +1,25 @@
+from pydantic import BaseModel
+
 from app22.logger_core.config_logger import ConfigLogger
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 
-from app22.celery_tasks.Class_client_https import RespServer, main_weather_create_task, main_weather_await
-from app22.new_routers.schema_new_tasks import WeatherBodyReq
+from app22.http_request_routers.Class_client_https import (
+    RespServer,
+    main_weather_create_task,
+    main_weather_await,
+)
 
 
 logFC = ConfigLogger.getLogger("FileStdout", "api_request")
 
 
 api_request = APIRouter(prefix="/api_request", tags=["NEW api_request"])
+
+
+class WeatherBodyReq(BaseModel):
+    q: str = "Moscow"
+    APPID: str = "2a4ff86f9aaa70041ec8e82db64abf56"
 
 
 @api_request.post("/weather_create_task", response_model=RespServer)

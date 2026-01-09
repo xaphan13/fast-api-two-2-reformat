@@ -1,6 +1,6 @@
 from app22.db_crud_base.async_crud_base import AsyncBaseCRUD
-from app22.core.templates_model import TableName
-from app22.core.templates_schema import Create, Get
+from app22.core.template_files.templates_model import TableName
+from app22.core.template_files.templates_schema import Create, Get
 
 
 class TemplatesAsyncCRUD(AsyncBaseCRUD[TableName, Create, Get, Create, Get]):

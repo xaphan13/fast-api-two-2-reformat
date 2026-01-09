@@ -16,7 +16,7 @@ from app22.db_crud_base.async_join_address import addrDB
 from app22.db_crud_base.async_join_person import personDB
 from app22.db_crud_base.async_post import postDB
 from app22.db_crud_base.async_user import userDB
-from app22.new_routers.data_join import data_addr, data_pers
+from app22.http_request_routers.data_join import data_addr, data_pers
 
 
 logFC = ConfigLogger.getLogger("FileStdout", "join_one_r")
