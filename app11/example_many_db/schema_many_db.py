@@ -20,6 +20,8 @@ class OrderCreateBody(BaseModel):
 
 class OrderUpdateBody(BaseModel):
     promocode: Optional[str] = ""
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -41,6 +43,8 @@ class ProductUpdateBody(BaseModel):
     name: Optional[str] = ""
     description: Optional[str] = ""
     price: int | str = ""
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -51,6 +55,8 @@ class AssociationGetQuery(BaseModel):
     unit_price: Optional[int] = 0
     order_id: Optional[int] = 0
     product_id: Optional[int] = 0
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -60,6 +66,8 @@ class AssociationGetQuery(BaseModel):
 class OrderProductBase(BaseModel):
     class Config:
         from_attributes = True
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -85,6 +93,8 @@ class AssociationResp(BaseModel):
     unit_price: int
     order_id: int
     product_id: int
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -101,6 +111,8 @@ class ProductRespWithsAssoc(ProductResp):
 class ProductRespWithOrdersAssoc(ProductResp):
     orders: List[OrderResp]
     orders_details: List[AssociationResp]
+
+
 # ---------------------------------------------------------------------------------------
 
 
@@ -121,6 +133,8 @@ class OrderRespWithProductsAssoc(OrderResp):
 
 class OrderRespWithProductsDetails(OrderResp):
     products: List[ProductRespWithsAssoc]
+
+
 # ---------------------------------------------------------------------------------------
 
 

@@ -3,8 +3,7 @@ from app22.db_core.model.model_join import JoinPerson
 from app22.join_tables.schema_join import CreateJoinPerson, GetJoinPerson
 
 
-class AsyncJoinPersonCRUD(AsyncBaseCRUD[JoinPerson, CreateJoinPerson, GetJoinPerson,
-                                                    CreateJoinPerson, GetJoinPerson]):
+class AsyncJoinPersonCRUD(AsyncBaseCRUD[JoinPerson, CreateJoinPerson, GetJoinPerson, CreateJoinPerson, GetJoinPerson]):
     def get_model(self):
         return self.model
 

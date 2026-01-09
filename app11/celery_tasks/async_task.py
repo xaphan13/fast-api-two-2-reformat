@@ -17,7 +17,7 @@ def create_task(a, b, c):
     return b + c + 3
 
 
-@shared_task(name='create_shared_task')
+@shared_task(name="create_shared_task")
 def create_shared_task(a, b, c):
     logFC.info(f"'Celery' {datetime.utcnow()}: shared_task - before : {a} + {b} = {c}")
     time.sleep(a)

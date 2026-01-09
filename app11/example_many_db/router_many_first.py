@@ -5,8 +5,7 @@ from app11.db_core.db_conf import SessionDB
 from sqlalchemy.orm import Session
 
 from app11.example_many_db.except_many_db import MyApiRouterMany
-from app11.example_many_db.schema_many_db import OrderResp, OrderGetQuery,   \
-                                      OrderUpdateBody, OrderCreateBody
+from app11.example_many_db.schema_many_db import OrderResp, OrderGetQuery, OrderUpdateBody, OrderCreateBody
 
 from app11.example_many_db.model_many_db import Order
 
@@ -34,8 +33,7 @@ def add_order(body: OrderCreateBody, db: Session = Depends(SessionDB.get_db)):
 
 # updating Order from the database *****************************************************
 @ex_many_route_f.put("/update_order", response_model=OrderResp)
-def update_order(body: OrderUpdateBody, db: Session = Depends(SessionDB.get_db),
-                 order: Order = Depends(get_order)):
+def update_order(body: OrderUpdateBody, db: Session = Depends(SessionDB.get_db), order: Order = Depends(get_order)):
     update = body.dict(exclude_none=True).items()
     [setattr(order, name, value) for name, value in update if value != ""]
     db.commit()

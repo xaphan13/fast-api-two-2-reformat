@@ -3,10 +3,7 @@ from typing import Optional, List, Self
 from pydantic import BaseModel, Field
 
 from app22.db_core.model.model_reader_book import Reader, Book
-from app22.reader_project.schema_reader import (SchemaListBook,
-                                                SchemaReader,
-                                                SchemaCategory,
-                                                SchemaBook)
+from app22.reader_project.schema_reader import SchemaListBook, SchemaReader, SchemaCategory, SchemaBook
 
 
 # ==============================================================================
@@ -37,13 +34,13 @@ class SchemaAddBook(BaseModel):
 
 
 class ReaderAddBooks(BaseModel):
-    id: Optional[int] = Field(None, alias='reader_id')
-    nickname: Optional[str] = Field(None, alias='reader_nickname')
+    id: Optional[int] = Field(None, alias="reader_id")
+    nickname: Optional[str] = Field(None, alias="reader_nickname")
 
 
 class ListBookAddBooks(BaseModel):
-    id: Optional[int] = Field(None, alias='list_id')
-    list_name: Optional[str] = Field(None, alias='list_name')
+    id: Optional[int] = Field(None, alias="list_id")
+    list_name: Optional[str] = Field(None, alias="list_name")
 
 
 # ==============================================================================

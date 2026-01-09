@@ -12,8 +12,12 @@ from app11.db_core.db_conf import SessionDB
 from app11.example_many_db.model_many_db import Order, Product, OrderProductAssociation
 from app11.example_many_db.crud_many import order_db, product_db
 
-from app11.example_many_db.schema_many_db import OrderResp, ProductResp,       \
-                    OrderRespWithProducts, OrderRespWithProductsDetails
+from app11.example_many_db.schema_many_db import (
+    OrderResp,
+    ProductResp,
+    OrderRespWithProducts,
+    OrderRespWithProductsDetails,
+)
 
 
 ex_assoc_route = APIRouter(route_class=MyApiRouterMany, prefix="/ex_assoc", tags=["ex_assoc"])
@@ -47,14 +51,15 @@ def add_big(db: Session = Depends(SessionDB.get_db)) -> dict[str, str]:
     list_ord = [{"promocode": "first"}, {"promocode": "second"}, {"promocode": "third"}]
 
     list_prod = [
-           {"name": "111", "description": "111aaa", "price": 100},
-           {"name": "222", "description": "222bbb", "price": 200},
-           {"name": "333", "description": "333ccc", "price": 300},
-           {"name": "444", "description": "444ddd", "price": 400},
-           {"name": "555", "description": "555eee", "price": 500},
-           {"name": "666", "description": "666fff", "price": 600},
-           {"name": "777", "description": "777ggg", "price": 700},
-           {"name": "888", "description": "888hhh", "price": 800}]
+        {"name": "111", "description": "111aaa", "price": 100},
+        {"name": "222", "description": "222bbb", "price": 200},
+        {"name": "333", "description": "333ccc", "price": 300},
+        {"name": "444", "description": "444ddd", "price": 400},
+        {"name": "555", "description": "555eee", "price": 500},
+        {"name": "666", "description": "666fff", "price": 600},
+        {"name": "777", "description": "777ggg", "price": 700},
+        {"name": "888", "description": "888hhh", "price": 800},
+    ]
 
     logFC.info(f"add_big : list_ord = {list_ord}")
 
@@ -66,8 +71,7 @@ def add_big(db: Session = Depends(SessionDB.get_db)) -> dict[str, str]:
 
 
 # append Products to Orders *************************************************************
-@ex_assoc_route.get("/products_append", response_model=dict[str, str] | None |
-                                                       list[OrderRespWithProducts])
+@ex_assoc_route.get("/products_append", response_model=dict[str, str] | None | list[OrderRespWithProducts])
 def products_append(db: Session = Depends(SessionDB.get_db)):
     prod_list: list[Type[Product]] = product_db.get_record_all(db)
     prod_dict = {product.name: product for product in prod_list}
@@ -96,13 +100,11 @@ def products_append(db: Session = Depends(SessionDB.get_db)):
 
 
 # append OrderProductAssociation to Order ***********************************************
-@ex_assoc_route.get("/assoc_append", response_model=dict[str, str] | None |
-                                                    list[OrderRespWithProductsDetails])
+@ex_assoc_route.get("/assoc_append", response_model=dict[str, str] | None | list[OrderRespWithProductsDetails])
 def assoc_append(db: Session = Depends(SessionDB.get_db)):
     prod_list: list[Type[Product]] = product_db.get_record_all(db)
     prod_dict = {product.name: product for product in prod_list}
     try:
-
         order1: Order = order_db.get_record_dict_none({"promocode": "first"}, db)
         if order1 is not None:
             or_pr1 = OrderProductAssociation(count=1, unit_price=1000, product=prod_dict.get("111"))

@@ -29,12 +29,8 @@ def upgrade() -> None:
         "order_product_association",
         type_="foreignkey",
     )
-    op.create_foreign_key(
-        None, "order_product_association", "orders", ["order_id"], ["id"]
-    )
-    op.create_foreign_key(
-        None, "order_product_association", "products", ["product_id"], ["id"]
-    )
+    op.create_foreign_key(None, "order_product_association", "orders", ["order_id"], ["id"])
+    op.create_foreign_key(None, "order_product_association", "products", ["product_id"], ["id"])
     # ### end Alembic commands ###
 
 

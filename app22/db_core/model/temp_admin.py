@@ -7,23 +7,23 @@ from app22.db_core.base import Base
 
 
 class Admin_list(Base):
-    __tablename__ = 'admin_list'
+    __tablename__ = "admin_list"
     admin_id: Mapped[int] = mapped_column(Integer(), unique=True, nullable=False, primary_key=True)
 
     user_id: Mapped[str] = mapped_column(String(), unique=True, nullable=False)
 
-    admin_worked: Mapped[List['Admin_work']] = relationship(back_populates='admin_lists', cascade='all, delete-orphan')
+    admin_worked: Mapped[List["Admin_work"]] = relationship(back_populates="admin_lists", cascade="all, delete-orphan")
 
 
 class Admin_work(Base):
-    __tablename__ = 'admin_work'
+    __tablename__ = "admin_work"
     admin_work_id: Mapped[int] = mapped_column(BIGINT, unique=True, nullable=False, primary_key=True)
 
     type_work: Mapped[str] = mapped_column(String, unique=False, nullable=False)
     callback_data: Mapped[str] = mapped_column(String, unique=False, nullable=False)
 
-    admin_id: Mapped[int] = mapped_column(ForeignKey('admin_list.admin_id', ondelete="CASCADE"))
-    admin_lists: Mapped["Admin_list"] = relationship(back_populates='admin_worked')
+    admin_id: Mapped[int] = mapped_column(ForeignKey("admin_list.admin_id", ondelete="CASCADE"))
+    admin_lists: Mapped["Admin_list"] = relationship(back_populates="admin_worked")
 
 
 async def fixing_work_admin(admin_id_work: str, callback_data: str, db: AsyncSession):
@@ -32,6 +32,6 @@ async def fixing_work_admin(admin_id_work: str, callback_data: str, db: AsyncSes
     admin_stmt = await db.execute(stmt)
 
     add_work: Admin_list | None = admin_stmt.first()
-    add_work.admin_worked = [Admin_work(type_work='Registration', callback_data=callback_data)]
+    add_work.admin_worked = [Admin_work(type_work="Registration", callback_data=callback_data)]
 
     await db.commit()

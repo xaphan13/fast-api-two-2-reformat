@@ -1,7 +1,6 @@
 from typing import Any, AsyncGenerator
 
-from sqlalchemy.ext.asyncio import (create_async_engine, AsyncSession,
-                                    async_sessionmaker, async_scoped_session)
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker, async_scoped_session
 from asyncio import current_task
 from app22.core.config import DATABASE_URL_ASYNC
 
@@ -22,8 +21,7 @@ class AsyncSessionDB:
 
     def get_models(self):
         """this is so that alembic can see the models and create tables"""
-        return Base, TaskOne, TaskTwo, User, Post,       \
-               Order, Product, OrderProductAssociation
+        return Base, TaskOne, TaskTwo, User, Post, Order, Product, OrderProductAssociation
 
     async def get_db(self) -> AsyncGenerator[AsyncSession, Any]:
         """Dependency for getting session"""

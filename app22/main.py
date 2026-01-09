@@ -32,12 +32,12 @@ app.include_router(reader_aCrud_two)
 
 
 def main():
-    """ запуск через uvicorn """
+    """запуск через uvicorn"""
     logFC.info(f"'Start' FastApi 22 = {app}")  # logFC.info(f"'Start' {app}")
 
     uvicorn.run(app, host="0.0.0.0", port=9000)
     logFC.info(f"'Stop' FastApi 22 = {app}\n'****************************'\n\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

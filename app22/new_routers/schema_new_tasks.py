@@ -34,8 +34,8 @@ class Req1BodyReq(BaseModel):
 
 
 class Req1ParamsReq(BaseModel):
-    q: str = 'Moscow'
-    APPID: str = '2a4ff86f9aaa70041ec8e82db64abf56'
+    q: str = "Moscow"
+    APPID: str = "2a4ff86f9aaa70041ec8e82db64abf56"
 
 
 class ResponseReq1(BaseModel):
@@ -45,5 +45,5 @@ class ResponseReq1(BaseModel):
 
 # **************************************************************
 class WeatherBodyReq(BaseModel):
-    q: str = 'Moscow'
-    APPID: str = '2a4ff86f9aaa70041ec8e82db64abf56'
+    q: str = "Moscow"
+    APPID: str = "2a4ff86f9aaa70041ec8e82db64abf56"

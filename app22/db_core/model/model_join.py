@@ -15,8 +15,10 @@ class JoinPerson(Base):
     link_addr = Column(Integer(), default=-1)
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id}, "    \
-               f"name={self.name}, surname={self.surname}, link_addr={self.link_addr})"
+        return (
+            f"{self.__class__.__name__}(id={self.id}, "
+            f"name={self.name}, surname={self.surname}, link_addr={self.link_addr})"
+        )
 
 
 class JoinAddress(Base):
@@ -30,5 +32,7 @@ class JoinAddress(Base):
     addr_index = Column(Integer(), default=0)
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(addr_index={self.addr_index}, "    \
-               f"city={self.city}, street={self.street}, id={self.id})"
+        return (
+            f"{self.__class__.__name__}(addr_index={self.addr_index}, "
+            f"city={self.city}, street={self.street}, id={self.id})"
+        )

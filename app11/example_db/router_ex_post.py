@@ -7,19 +7,22 @@ from sqlalchemy.orm import Session
 from sqlalchemy import Column, text
 
 from app11.example_db.except_ex_db import MyApiRouter
-from app11.example_db.schema_ex_db import (PostSchemaResp,
-                                           GetPostQuery,
-                                           PostSchemaAuthorResp,
-                                           PostCreateBody,
-                                           PostsOrderQuery,
-                                           PostUpdateBody,
-                                           MigrationUpdateBody)
+from app11.example_db.schema_ex_db import (
+    PostSchemaResp,
+    GetPostQuery,
+    PostSchemaAuthorResp,
+    PostCreateBody,
+    PostsOrderQuery,
+    PostUpdateBody,
+    MigrationUpdateBody,
+)
 
 from app11.example_db.crud_db_users import dep_getUser_id, dep_getUser_name
 from app11.example_db.model_ex_db import Post, User
 
 
 from app11.logger_core.config_logger import ConfigLogger
+
 logFC = ConfigLogger.getLogger("FileStdout", "ex_simple")
 
 
@@ -29,18 +32,14 @@ ex_post_route = APIRouter(route_class=MyApiRouter, prefix="/ex_post", tags=["ex_
 # UPDATE alembic version_num in database **********************************************************
 @ex_post_route.put("/update_migration", response_model=dict)
 def update_migration(body: MigrationUpdateBody, db: Session = Depends(SessionDB.get_db)):
-
-    current_version: Optional[str] = db.execute(
-        text("SELECT version_num FROM alembic_version")
-    ).scalar()
+    current_version: Optional[str] = db.execute(text("SELECT version_num FROM alembic_version")).scalar()
     logFC.info(f"update_migration : {current_version=}")
 
     if current_version is None:
         raise HTTPException(status_code=404, detail="Current migration version not found")
 
     try:
-        db.execute(text("UPDATE alembic_version SET version_num = :new_version"),
-                {"new_version": body.new_version})
+        db.execute(text("UPDATE alembic_version SET version_num = :new_version"), {"new_version": body.new_version})
         db.commit()
     except Exception as e:
         db.rollback()
@@ -52,8 +51,9 @@ def update_migration(body: MigrationUpdateBody, db: Session = Depends(SessionDB.
 
 # adding users to the database **********************************************************
 @ex_post_route.post("/add_post_userid", response_model=PostSchemaAuthorResp, status_code=200)
-def add_post_userid(body: PostCreateBody, db: Session = Depends(SessionDB.get_db),
-                    user: User = Depends(dep_getUser_id)):
+def add_post_userid(
+    body: PostCreateBody, db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_id)
+):
     new_post: Post = Post(title=body.title, content=body.content, user_id=user.id)
     db.add(new_post)
     db.commit()
@@ -61,9 +61,10 @@ def add_post_userid(body: PostCreateBody, db: Session = Depends(SessionDB.get_db
 
 
 @ex_post_route.post("/add_post_nickname", response_model=PostSchemaAuthorResp, status_code=200)
-def add_post_nickname(body: PostCreateBody, db: Session = Depends(SessionDB.get_db),
-                      user: User = Depends(dep_getUser_name)):
-    new_post: Post = Post(**body.dict(exclude={'nickname'}))
+def add_post_nickname(
+    body: PostCreateBody, db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_name)
+):
+    new_post: Post = Post(**body.dict(exclude={"nickname"}))
     new_post.author = user
     db.add(new_post)
     db.commit()
@@ -71,8 +72,9 @@ def add_post_nickname(body: PostCreateBody, db: Session = Depends(SessionDB.get_
 
 
 @ex_post_route.post("/add_post_append", response_model=PostSchemaAuthorResp, status_code=200)
-def add_post_append(body: PostCreateBody, db: Session = Depends(SessionDB.get_db),
-                    user: User = Depends(dep_getUser_name)):
+def add_post_append(
+    body: PostCreateBody, db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_name)
+):
     new_post: Post = Post(title=body.title, content=body.content)
     user.posts.append(new_post)
     db.add(new_post)
@@ -110,9 +112,7 @@ def get_posts_all_order_by(order: PostsOrderQuery, db: Session = Depends(Session
 
 @ex_post_route.get("/get_posts_all_author", response_model=list[PostSchemaAuthorResp], status_code=200)
 def get_posts_all_author(db: Session = Depends(SessionDB.get_db)):
-    posts: list[Type[Post]] = db.query(Post)  \
-                                .join(User)   \
-                                .order_by(User.nickname).all()
+    posts: list[Type[Post]] = db.query(Post).join(User).order_by(User.nickname).all()
     return posts
 
 
@@ -132,12 +132,11 @@ def delete_user(query: GetPostQuery = Depends(), db: Session = Depends(SessionDB
 # updating post from the database *****************************************************
 @ex_post_route.put("/update_post", response_model=PostSchemaResp)
 def update_post(body: PostUpdateBody, db: Session = Depends(SessionDB.get_db)):
-
     post: Optional[Post] = db.query(Post).filter(Post.id == body.id).first()
     if post is None:
         raise HTTPException(status_code=422, detail=f"Post with id={body.id} not found")
 
-    for name, value in body.dict(exclude_unset=True, exclude={'id'}).items():
+    for name, value in body.dict(exclude_unset=True, exclude={"id"}).items():
         if value != "":
             setattr(post, name, value)
 
@@ -161,8 +160,7 @@ def drop_all_tables(db: Session = Depends(SessionDB.get_db)):
 def template_posts_joinedload(db: Session = Depends(SessionDB.get_db)):
     # posts: list[Type[Post]] = db.query(Post).outerjoin(Post.author).order_by(User.nickname).all()
 
-    posts: list[Type[Post]] = db.query(Post).join(User)  \
-                                .order_by(User.nickname).all()
+    posts: list[Type[Post]] = db.query(Post).join(User).order_by(User.nickname).all()
     # posts: list[Type[Post]] = db.query(Post).join(User)  \
     #                             .options(selectinload(Post.author))  \
     #                             .order_by(User.nickname).all()

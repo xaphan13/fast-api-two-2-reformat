@@ -6,11 +6,21 @@ from sqlalchemy import select, ScalarResult, Row, update, and_
 from sqlalchemy.orm import Session
 
 from app11.example_db.except_ex_db import MyApiRouter
-from app11.example_db.schema_ex_db import UserCreateBody, UserSchemaResp, GetUserQuery, \
-                                    UserSchemaPostsResp, UserUpdateBody
+from app11.example_db.schema_ex_db import (
+    UserCreateBody,
+    UserSchemaResp,
+    GetUserQuery,
+    UserSchemaPostsResp,
+    UserUpdateBody,
+)
 
-from app11.example_db.crud_db_users import crud_select_where_getUser, crud_query_filterby_getUser, \
-          example_execute_select_getUser, example_execute_scalars_getUser, dep_getUser_name
+from app11.example_db.crud_db_users import (
+    crud_select_where_getUser,
+    crud_query_filterby_getUser,
+    example_execute_select_getUser,
+    example_execute_scalars_getUser,
+    dep_getUser_name,
+)
 
 from app11.example_db.model_ex_db import User, Post
 
@@ -71,9 +81,7 @@ def get_users_posts_list(db: Session = Depends(SessionDB.get_db)):
 
 # deleting user from the database *****************************************************
 @ex_user_route.delete("/delete_user", response_model=UserSchemaResp)
-def delete_user(db: Session = Depends(SessionDB.get_db),
-                user: User = Depends(dep_getUser_name)):
-
+def delete_user(db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_name)):
     db.delete(user)
     db.commit()
     return user
@@ -81,9 +89,7 @@ def delete_user(db: Session = Depends(SessionDB.get_db),
 
 # updating user from the database *****************************************************
 @ex_user_route.put("/update_user", response_model=UserSchemaResp)
-def update_user(body: UserUpdateBody, db: Session = Depends(SessionDB.get_db),
-                user: User = Depends(dep_getUser_name)):
-
+def update_user(body: UserUpdateBody, db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_name)):
     for name, value in body.dict(exclude_unset=True).items():
         if value != "":
             setattr(user, name, value)
@@ -96,9 +102,9 @@ def update_user(body: UserUpdateBody, db: Session = Depends(SessionDB.get_db),
 # templates requesting users to dataBase ================================================
 # ---------------------------------------------------------------------------------------
 @ex_user_route.put("/template_update_user", response_model=UserSchemaResp)
-def template_update_user(body: UserUpdateBody, db: Session = Depends(SessionDB.get_db),
-                                        user: User = Depends(dep_getUser_name)):
-
+def template_update_user(
+    body: UserUpdateBody, db: Session = Depends(SessionDB.get_db), user: User = Depends(dep_getUser_name)
+):
     query_dict = {key: value for key, value in body.dict(exclude_unset=True).items() if value != ""}
 
     stmt = update(User).where(User.id == int(user.id)).values(query_dict).returning(User.id)
@@ -112,8 +118,9 @@ def template_update_user(body: UserUpdateBody, db: Session = Depends(SessionDB.g
 
 
 @ex_user_route.get("/template_get_user", response_model=UserSchemaResp, status_code=200)
-def template_get_user(type_sql: int = Query(2), query: GetUserQuery = Depends(),
-                      db: Session = Depends(SessionDB.get_db)):
+def template_get_user(
+    type_sql: int = Query(2), query: GetUserQuery = Depends(), db: Session = Depends(SessionDB.get_db)
+):
     user: Optional[User] = None
     query_dict = {key: value for key, value in query.dict().items() if value is not None}
 
@@ -137,7 +144,6 @@ def template_get_user(type_sql: int = Query(2), query: GetUserQuery = Depends(),
 
 @ex_user_route.get("/template_get_users_list", response_model=list[UserSchemaResp], status_code=200)
 def template_get_users_list(type_sql: int = Query(1), db: Session = Depends(SessionDB.get_db)):
-
     users = []
     stmt = select(User).order_by(User.id).order_by(User.nickname)
 
@@ -159,21 +165,16 @@ def template_get_users_list(type_sql: int = Query(1), db: Session = Depends(Sess
 
 @ex_user_route.get("/template_query", response_model=UserSchemaResp, status_code=200)
 def template_query(query: GetUserQuery = Depends(), db: Session = Depends(SessionDB.get_db)):
-
-    user1 = db.query(User.email)\
-              .filter_by(id=query.id, nickname=query.nickname).first()
+    user1 = db.query(User.email).filter_by(id=query.id, nickname=query.nickname).first()
     print(f"\n\n template_query 1 = {type(user1)} = {user1}")
 
-    user21 = db.query(User, Post).outerjoin(Post)   \
-               .where(and_(User.id == query.id, Post.user_id == query.id)).first()
+    user21 = db.query(User, Post).outerjoin(Post).where(and_(User.id == query.id, Post.user_id == query.id)).first()
     print(f"\n\n template_query 21 = {type(user21[0])} = {user21}")
 
-    user22 = db.query(User, Post).join(Post)    \
-               .where(and_(User.id == query.id, Post.user_id == query.id)).all()
+    user22 = db.query(User, Post).join(Post).where(and_(User.id == query.id, Post.user_id == query.id)).all()
     print(f"\n\n template_query 22 = {type(user22[0][1])} = {user22}")
 
-    user3 = db.query(User)     \
-              .filter(and_(User.id == query.id, User.nickname == query.nickname)).first()
+    user3 = db.query(User).filter(and_(User.id == query.id, User.nickname == query.nickname)).first()
     print(f"\n\n template_query 3 = {user3}")
 
     filter_conditions = [getattr(User, key) == value for key, value in query.dict(exclude_none=True).items()]

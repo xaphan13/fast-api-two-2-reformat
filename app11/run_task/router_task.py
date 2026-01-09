@@ -25,8 +25,9 @@ def task_apply(req: ReqTaskSchema):
 
     scheduled_time = datetime.utcnow() + timedelta(seconds=10)
     # task = create_task.apply_async(args=[amount, x, y], countdown=10)
-    task: AsyncResult = create_task.apply_async(args=[amount, x, y], eta=scheduled_time,
-                                                retry=True, retry_policy={"max_retries": 3}, priority=5)
+    task: AsyncResult = create_task.apply_async(
+        args=[amount, x, y], eta=scheduled_time, retry=True, retry_policy={"max_retries": 3}, priority=5
+    )
 
     logFC.info(f"time = {datetime.utcnow()} - {scheduled_time}")
     task_result = task.get()
@@ -67,18 +68,20 @@ task_id: Union[None, str] = None
 
 
 @tasks_route.get("/send_task")
-def send_task(a: int = Query(30, ge=1, le=99), b: int = Query(40, ge=1, le=99),
-              work_sleep: int = Query(2, ge=1, le=9, description="time.sleep(sec)"),
-              delay_exec_sec: int = Query(30, ge=1, le=3600, description="eta=scheduled_time"),
-              celery: Celery = Depends(depends_celery)):
+def send_task(
+    a: int = Query(30, ge=1, le=99),
+    b: int = Query(40, ge=1, le=99),
+    work_sleep: int = Query(2, ge=1, le=9, description="time.sleep(sec)"),
+    delay_exec_sec: int = Query(30, ge=1, le=3600, description="eta=scheduled_time"),
+    celery: Celery = Depends(depends_celery),
+):
     global task_id
     if task_id is not None:
         raise HTTPException(status_code=404, detail="Task started - only one task")
 
     scheduled_time = datetime.utcnow() + timedelta(seconds=delay_exec_sec)
 
-    task_result: AsyncResult = celery.send_task("create_task",
-                                                args=[work_sleep, a, b], eta=scheduled_time)
+    task_result: AsyncResult = celery.send_task("create_task", args=[work_sleep, a, b], eta=scheduled_time)
 
     task_id = task_result.id
     return {"task_id": task_result.id}  # return {"task_result": task_result.get()}

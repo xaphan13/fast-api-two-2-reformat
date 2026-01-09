@@ -11,10 +11,20 @@ from app11.db_core.db_conf import SessionDB
 from app11.example_many_db.model_many_db import Order, Product
 from app11.example_many_db.crud_many import order_db, product_db
 
-from app11.example_many_db.schema_many_db import OrderResp, ProductResp, \
-    OrderGetQuery, OrderUpdateBody, OrderCreateBody, \
-    ProductGetQuery, ProductUpdateBody, ProductCreateBody, \
-    ProductRespWithOrders, ProductRespWithsAssoc, ProductRespWithOrdersAssoc, TypeResponse
+from app11.example_many_db.schema_many_db import (
+    OrderResp,
+    ProductResp,
+    OrderGetQuery,
+    OrderUpdateBody,
+    OrderCreateBody,
+    ProductGetQuery,
+    ProductUpdateBody,
+    ProductCreateBody,
+    ProductRespWithOrders,
+    ProductRespWithsAssoc,
+    ProductRespWithOrdersAssoc,
+    TypeResponse,
+)
 
 
 ex_many_route = APIRouter(route_class=MyApiRouterMany, prefix="/ex_many", tags=["ex_many"])
@@ -40,8 +50,7 @@ def get_order_first(query: OrderGetQuery = Depends(), db: Session = Depends(Sess
 
 # updating Order from the database ******************************************************
 @ex_many_route.put("/update_order", response_model=OrderResp)
-def update_order(body: OrderUpdateBody, db: Session = Depends(SessionDB.get_db),
-                 query: OrderGetQuery = Depends()):
+def update_order(body: OrderUpdateBody, db: Session = Depends(SessionDB.get_db), query: OrderGetQuery = Depends()):
     order: Order = order_db.update_record(query, body, db)
     return order
 
@@ -85,19 +94,21 @@ def add_product(body: ProductCreateBody, db: Session = Depends(SessionDB.get_db)
 
 
 # requesting Product from the database **************************************************
-@ex_many_route.get("/get_product_first", response_model=ProductRespWithOrdersAssoc |
-                                                             ProductRespWithsAssoc |
-                                                             ProductRespWithOrders |
-                                                             ProductResp)
-def get_product_first(type_response: TypeResponse, query: ProductGetQuery = Depends(),
-                                                        db: Session = Depends(SessionDB.get_db)):
+@ex_many_route.get(
+    "/get_product_first",
+    response_model=ProductRespWithOrdersAssoc | ProductRespWithsAssoc | ProductRespWithOrders | ProductResp,
+)
+def get_product_first(
+    type_response: TypeResponse, query: ProductGetQuery = Depends(), db: Session = Depends(SessionDB.get_db)
+):
     # product: Product = product_db.get_record_schema_raise(query, db)
     query_dict = {key: value for key, value in query.dict().items() if value is not None}
-    product: Optional[Product] = db.query(Product)\
-                                   .options(
-                                        joinedload(Product.orders),
-                                        selectinload(Product.orders_details)
-                                   ).filter_by(**query_dict).first()
+    product: Optional[Product] = (
+        db.query(Product)
+        .options(joinedload(Product.orders), selectinload(Product.orders_details))
+        .filter_by(**query_dict)
+        .first()
+    )
     if product is None:
         raise HTTPException(status_code=422, detail=f"Product.filter_by with {query_dict} not found")
 
@@ -124,8 +135,9 @@ def get_product_all(db: Session = Depends(SessionDB.get_db)):
 
 # updating Product from the database ****************************************************
 @ex_many_route.put("/update_product", response_model=ProductResp)
-def update_product(body: ProductUpdateBody, db: Session = Depends(SessionDB.get_db),
-                   query: ProductGetQuery = Depends()):
+def update_product(
+    body: ProductUpdateBody, db: Session = Depends(SessionDB.get_db), query: ProductGetQuery = Depends()
+):
     product: Product = product_db.update_record(query, body, db)
     return product
 

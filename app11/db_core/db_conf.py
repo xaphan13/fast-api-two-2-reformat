@@ -21,8 +21,7 @@ class SessionDB:
     @staticmethod
     def get_models():
         """this is so that alembic can see the models and create tables"""
-        return Base, TaskOne, TaskTwo, Post, User,    \
-            Order, Product, OrderProductAssociation
+        return Base, TaskOne, TaskTwo, Post, User, Order, Product, OrderProductAssociation
 
     @staticmethod
     def get_db():

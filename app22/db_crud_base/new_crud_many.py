@@ -1,26 +1,31 @@
 from app22.db_crud_base.new_crud_base import NewCRUDBase
 from app22.async_many_sql.schema_many_sql import (
-                            AssociationGetQuery,
-                            OrderCreateBody, OrderGetQuery, OrderUpdateBody,
-                            ProductCreateBody, ProductGetQuery, ProductUpdateBody)
+    AssociationGetQuery,
+    OrderCreateBody,
+    OrderGetQuery,
+    OrderUpdateBody,
+    ProductCreateBody,
+    ProductGetQuery,
+    ProductUpdateBody,
+)
 from app22.db_core.model.model_new_many_db import Order, Product, OrderProductAssociation
 
 
-class OrderCRUD(NewCRUDBase[Order, OrderCreateBody, OrderGetQuery,
-                                   OrderUpdateBody, OrderGetQuery]):
+class OrderCRUD(NewCRUDBase[Order, OrderCreateBody, OrderGetQuery, OrderUpdateBody, OrderGetQuery]):
     def get_model(self):
         return self.model
 
 
-class ProductCRUD(NewCRUDBase[Product, ProductCreateBody, ProductGetQuery,
-                                       ProductUpdateBody, ProductGetQuery]):
+class ProductCRUD(NewCRUDBase[Product, ProductCreateBody, ProductGetQuery, ProductUpdateBody, ProductGetQuery]):
     def get_model(self):
         return self.model
 
 
-class OrderProductAssociationCRUD(NewCRUDBase[OrderProductAssociation,
-                                              AssociationGetQuery, AssociationGetQuery,
-                                              AssociationGetQuery, AssociationGetQuery]):
+class OrderProductAssociationCRUD(
+    NewCRUDBase[
+        OrderProductAssociation, AssociationGetQuery, AssociationGetQuery, AssociationGetQuery, AssociationGetQuery
+    ]
+):
     def get_model(self):
         return self.model
 

@@ -4,8 +4,7 @@ from sqlalchemy.orm import Session
 
 from sqlalchemy import Column
 
-from app22.async_many_sql.schema_many_sql import (OrderCreateBody,
-                                OrderResp, OrderGetAllOrderbyQuery)
+from app22.async_many_sql.schema_many_sql import OrderCreateBody, OrderResp, OrderGetAllOrderbyQuery
 
 from app22.db_core.db_conf import SessionDB
 from app22.db_crud_base.new_crud_many import order_crud

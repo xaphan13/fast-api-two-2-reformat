@@ -3,8 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from app22.db_core.base import Base
-from app22.db_core.model.model_reader_assoc import (ListBookAssociation,
-                                                    BookCategoryAssociation)
+from app22.db_core.model.model_reader_assoc import ListBookAssociation, BookCategoryAssociation
 
 
 class Reader(Base):
@@ -16,13 +15,10 @@ class Reader(Base):
     user_id = Column(Integer(), default=0, nullable=False)
 
     # association between Reader -> ListBook = ForeignKey('readers.id',
-    book_lists = relationship('ListBook',
-                         back_populates='reader',
-                         cascade='all, delete')
+    book_lists = relationship("ListBook", back_populates="reader", cascade="all, delete")
 
     def __repr__(self):
-        return (f"Reader(id={self.id}, nickname={self.nickname}, "
-                f"user_id={self.user_id})")
+        return f"Reader(id={self.id}, nickname={self.nickname}, user_id={self.user_id})"
 
 
 class ListBook(Base):
@@ -35,22 +31,20 @@ class ListBook(Base):
     description = Column(String(200), nullable=False)
 
     # association ForeignKey between ListBook -> Reader
-    reader_id = Column(Integer(), ForeignKey('readers.id', ondelete="CASCADE"), nullable=False)
-    reader = relationship('Reader', back_populates='book_lists')
+    reader_id = Column(Integer(), ForeignKey("readers.id", ondelete="CASCADE"), nullable=False)
+    reader = relationship("Reader", back_populates="book_lists")
 
     # association many to many -> ListBookAssociation(ForeignKey('books.id',
-    books = relationship('Book',
-                         secondary=ListBookAssociation.__tablename__,
-                         back_populates='lists')
+    books = relationship("Book", secondary=ListBookAssociation.__tablename__, back_populates="lists")
 
     # association between ListBook -> ListBookAssociation = ForeignKey('listbooks.id',
-    book_associations = relationship('ListBookAssociation',
-                                     back_populates='list_book',
-                                     cascade='all, delete')
+    book_associations = relationship("ListBookAssociation", back_populates="list_book", cascade="all, delete")
 
     def __repr__(self):
-        return (f"ListBook(id={self.id}, list_name={self.list_name}, reader_id={self.reader_id}, "
-                f"time_created={self.time_created}, description={self.description})")
+        return (
+            f"ListBook(id={self.id}, list_name={self.list_name}, reader_id={self.reader_id}, "
+            f"time_created={self.time_created}, description={self.description})"
+        )
 
 
 class Book(Base):
@@ -63,23 +57,16 @@ class Book(Base):
     author = Column(String(50), nullable=False)
 
     # association between Book -> Category = BookCategoryAssociation(ForeignKey('books.id',
-    categories = relationship('Category',
-                             secondary=BookCategoryAssociation.__tablename__,
-                             back_populates='books')
+    categories = relationship("Category", secondary=BookCategoryAssociation.__tablename__, back_populates="books")
 
     # association many to many-> ListBookAssociation(ForeignKey('listbooks.id',
-    lists = relationship('ListBook',
-                         secondary=ListBookAssociation.__tablename__,
-                         back_populates='books')
+    lists = relationship("ListBook", secondary=ListBookAssociation.__tablename__, back_populates="books")
 
     # association between Book -> ListBookAssociation = ForeignKey('books.id',
-    list_associations = relationship('ListBookAssociation',
-                                     back_populates='book',
-                                     cascade='all, delete')
+    list_associations = relationship("ListBookAssociation", back_populates="book", cascade="all, delete")
 
     def __repr__(self):
-        return (f"Book(id={self.id}, title={self.title}, "
-                f"description={self.description}, author={self.author})")
+        return f"Book(id={self.id}, title={self.title}, description={self.description}, author={self.author})"
 
 
 class Category(Base):
@@ -91,10 +78,7 @@ class Category(Base):
     description = Column(String(200), nullable=False)
 
     # association between Category -> Book = BookCategoryAssociation(ForeignKey('categories.id'),
-    books = relationship('Book',
-                         secondary=BookCategoryAssociation.__tablename__,
-                         back_populates='categories')
+    books = relationship("Book", secondary=BookCategoryAssociation.__tablename__, back_populates="categories")
 
     def __repr__(self):
-        return (f"Category(id={self.id}, genre={self.genre}, "
-                f"description={self.description})")
+        return f"Category(id={self.id}, genre={self.genre}, description={self.description})"

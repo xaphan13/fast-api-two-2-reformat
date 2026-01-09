@@ -17,12 +17,15 @@ class User(Base):
     surname = Column(String(20), nullable=True)
     password = Column(String(100))
 
-    posts = relationship('Post', back_populates='author',  # class = 'Post', column in User = author
-                         lazy='select', cascade='all, delete')
+    posts = relationship(
+        "Post",
+        back_populates="author",  # class = 'Post', column in User = author
+        lazy="select",
+        cascade="all, delete",
+    )
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id}, " \
-               f"username={self.nickname!r}, email={self.email})"
+        return f"{self.__class__.__name__}(id={self.id}, username={self.nickname!r}, email={self.email})"
 
 
 class Post(Base):
@@ -33,10 +36,12 @@ class Post(Base):
 
     title = Column(String())
     content = Column(String())
-    user_id = Column(Integer(), ForeignKey('users.id'), nullable=False)  # tableName = users, column = id
+    user_id = Column(Integer(), ForeignKey("users.id"), nullable=False)  # tableName = users, column = id
 
-    author = relationship('User', back_populates='posts')  # class = 'User', column in User = posts
+    author = relationship("User", back_populates="posts")  # class = 'User', column in User = posts
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(id={self.id}, title={self.title!r}, " \
-               f"user_id={self.user_id}, time_created={self.time_created})"
+        return (
+            f"{self.__class__.__name__}(id={self.id}, title={self.title!r}, "
+            f"user_id={self.user_id}, time_created={self.time_created})"
+        )

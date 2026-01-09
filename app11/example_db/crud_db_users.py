@@ -43,10 +43,7 @@ def crud_select_where_getUser(db: Session, **query_dict) -> Optional[User]:
 
 
 def example_execute_select_getUser(db: Session, query: GetUserQuery) -> Optional[User]:
-    res_user: Result[User] = db.execute(select(User)
-                                        .where(and_(User.id == query.id,
-                                                    User.nickname == query.nickname))
-                                        )
+    res_user: Result[User] = db.execute(select(User).where(and_(User.id == query.id, User.nickname == query.nickname)))
     user_row: Row | None = res_user.fetchone()
     if user_row is not None:
         return user_row[0]
@@ -54,9 +51,7 @@ def example_execute_select_getUser(db: Session, query: GetUserQuery) -> Optional
 
 
 def example_execute_scalars_getUser(db: Session, query: GetUserQuery) -> Optional[User]:
-    stmt = select(User).where(and_(User.id == query.id,
-                                   User.nickname == query.nickname)
-                              )
+    stmt = select(User).where(and_(User.id == query.id, User.nickname == query.nickname))
     user: Optional[User] = db.execute(stmt).scalars().first()
     if user is not None:
         return user

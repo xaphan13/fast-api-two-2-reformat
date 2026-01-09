@@ -9,6 +9,7 @@ from sqlalchemy import Column, Executable
 from typing import Sequence
 
 from app22.db_core.db_async import Base
+
 SqlType = TypeVar("SqlType", bound=Base)
 CreateType = TypeVar("CreateType", bound=BaseModel)
 ReaderType = TypeVar("ReaderType", bound=BaseModel)
@@ -16,6 +17,7 @@ UpdateType = TypeVar("UpdateType", bound=BaseModel)
 DeleteType = TypeVar("DeleteType", bound=BaseModel)
 
 from app22.logger_core.config_logger import ConfigLogger
+
 logFC = ConfigLogger.getLogger("FileStdout", "AsyncBaseCRUD")
 
 
@@ -31,9 +33,7 @@ class AddResult:
         return self.reason[begin_D:end_D]
 
 
-class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
-                                     UpdateType, DeleteType]):
-
+class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType, UpdateType, DeleteType]):
     # *******************************************************************
     # *************************  AsyncBaseCRUD  *************************
     def __init__(self, model: Type[SqlType]):
@@ -61,8 +61,7 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
 
     # *******************************************************************
     # *********************** add  async  insert ************************
-    async def add_record(self, schema: CreateType, db: AsyncSession,
-                         commit: bool = True) -> SqlType:
+    async def add_record(self, schema: CreateType, db: AsyncSession, commit: bool = True) -> SqlType:
         new_record: SqlType = self.model(**schema.model_dump())
         db.add(new_record)
         # ______________________ await  async  added _______________________
@@ -73,8 +72,7 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
 
     # *******************************************************************
     # *********************** add  async  insert ************************
-    async def add_record_try(self, schema: CreateType, db: AsyncSession,
-                             commit: bool = True) -> AddResult:
+    async def add_record_try(self, schema: CreateType, db: AsyncSession, commit: bool = True) -> AddResult:
         new_record: SqlType = self.model(**schema.model_dump())
         db.add(new_record)
         # ______________________ await  async  added _______________________
@@ -88,8 +86,9 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
 
     # *******************************************************************
     # *********************** get  async  select ************************
-    async def get_record_one(self, schema: ReaderType, db: AsyncSession,
-                             query_n: Executable | None = None) -> SqlType | None:
+    async def get_record_one(
+        self, schema: ReaderType, db: AsyncSession, query_n: Executable | None = None
+    ) -> SqlType | None:
         filter_attr = self._get_filter_attr(schema)
         if len(filter_attr) == 0:
             return None
@@ -99,8 +98,9 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
         record: SqlType | None = result.scalar()
         return record
 
-    async def get_records_list(self, schema: ReaderType, db: AsyncSession,
-                               query_n: Executable | None = None) -> list[SqlType]:
+    async def get_records_list(
+        self, schema: ReaderType, db: AsyncSession, query_n: Executable | None = None
+    ) -> list[SqlType]:
         filter_attr = self._get_filter_attr(schema)
         query = select(self.model).where(*filter_attr) if query_n is None else query_n
         # ___________________ await  async  select  all ____________________
@@ -108,8 +108,9 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
         records: Sequence[SqlType] = result.scalars().all()
         return list(records)
 
-    async def get_all_records(self, order_by: list[Column[SqlType]], db: AsyncSession,
-                              query_n: Executable | None = None) -> list[SqlType]:
+    async def get_all_records(
+        self, order_by: list[Column[SqlType]], db: AsyncSession, query_n: Executable | None = None
+    ) -> list[SqlType]:
         query = select(self.model).order_by(*order_by) if query_n is None else query_n
         # ___________________ await  async  select  all ____________________
         result = await db.execute(query)
@@ -118,22 +119,21 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
 
     # *******************************************************************
     # ******* get async select - with selectinload(relationship) ********
-    async def get_record_rel_one(self, schema: ReaderType, load: list,
-                                 db: AsyncSession) -> SqlType | None:
+    async def get_record_rel_one(self, schema: ReaderType, load: list, db: AsyncSession) -> SqlType | None:
         query = select(self.model).where(*self._get_filter_attr(schema))
         for name_table in load:
             query = query.options(joinedload(name_table))
         return await self.get_record_one(schema, db, query_n=query)
 
-    async def get_records_rel_list(self, schema: ReaderType, load: list,
-                                   db: AsyncSession) -> list[SqlType]:
+    async def get_records_rel_list(self, schema: ReaderType, load: list, db: AsyncSession) -> list[SqlType]:
         query = select(self.model).where(*self._get_filter_attr(schema))
         for name_table in load:
             query = query.options(selectinload(name_table))
         return await self.get_records_list(schema, db, query_n=query)
 
-    async def get_order_rel_list(self, schema: ReaderType, load: list, db: AsyncSession,
-                                 order_by: list[Column[SqlType]] | None = None) -> list[SqlType]:
+    async def get_order_rel_list(
+        self, schema: ReaderType, load: list, db: AsyncSession, order_by: list[Column[SqlType]] | None = None
+    ) -> list[SqlType]:
         query = select(self.model).where(*self._get_filter_attr(schema))
         for name_table in load:
             query = query.options(selectinload(name_table))
@@ -141,8 +141,7 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
             query = query.order_by(*order_by)
         return await self.get_records_list(schema, db, query_n=query)
 
-    async def get_all_rel_records(self, order_by: list[Column[SqlType]], load: list,
-                                  db: AsyncSession) -> list[SqlType]:
+    async def get_all_rel_records(self, order_by: list[Column[SqlType]], load: list, db: AsyncSession) -> list[SqlType]:
         query = select(self.model).order_by(*order_by)
         for name_table in load:
             query = query.options(selectinload(name_table))
@@ -191,8 +190,11 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType,
         return qty_delete
 
     async def delete_all_or_id(self, db: AsyncSession, idx: int = 0):
-        result = await db.execute(delete(self.model)) if idx == 0 else \
-            await db.execute(delete(self.model).where(self.model.id == idx))
+        result = (
+            await db.execute(delete(self.model))
+            if idx == 0
+            else await db.execute(delete(self.model).where(self.model.id == idx))
+        )
         await db.commit()
         qty_delete = result.rowcount
         return qty_delete

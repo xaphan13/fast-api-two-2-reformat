@@ -15,9 +15,7 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 DeleteSchemaType = TypeVar("DeleteSchemaType", bound=BaseModel)
 
 
-class NewCRUDBase(Generic[ModelType, CreateSchemaType, ReadSchemaType,
-                                     UpdateSchemaType, DeleteSchemaType]):
-
+class NewCRUDBase(Generic[ModelType, CreateSchemaType, ReadSchemaType, UpdateSchemaType, DeleteSchemaType]):
     def __init__(self, model: Type[ModelType]):
         self.model: Type[ModelType] = model
 
@@ -65,28 +63,29 @@ class NewCRUDBase(Generic[ModelType, CreateSchemaType, ReadSchemaType,
 
     # requesting list of records from the database **************************************
     # -----------------------------------------------------------------------------------
-    def get_record_all(self, db: Session, order_by_list: list[Column[ModelType]] = None) \
-                                                                    -> list[Row[ModelType]]:
+    def get_record_all(self, db: Session, order_by_list: list[Column[ModelType]] = None) -> list[Row[ModelType]]:
         if order_by_list is None:
             records: list[Row[ModelType]] = db.query(self.model).all()
         else:
             records: list[Row[ModelType]] = db.query(self.model).order_by(*order_by_list).all()
         return records
 
-    def get_record_part(self, begin: int, length: int, db: Session,
-                              order_by_list: list[Column[ModelType]] = None) \
-                                                        -> list[Row[ModelType]]:
+    def get_record_part(
+        self, begin: int, length: int, db: Session, order_by_list: list[Column[ModelType]] = None
+    ) -> list[Row[ModelType]]:
         if order_by_list is None:
             records: list[Row[ModelType]] = db.query(self.model).offset(begin).limit(length).all()
         else:
-            records: list[Row[ModelType]] = db.query(self.model).order_by(*order_by_list)  \
-                                          .offset(begin).limit(length).all()
+            records: list[Row[ModelType]] = (
+                db.query(self.model).order_by(*order_by_list).offset(begin).limit(length).all()
+            )
         return records
 
     # updating record from the database *************************************************
     # -----------------------------------------------------------------------------------
-    def update_record(self, query: ReadSchemaType, body: UpdateSchemaType,
-                               db: Session, commit: bool = True) -> ModelType:
+    def update_record(
+        self, query: ReadSchemaType, body: UpdateSchemaType, db: Session, commit: bool = True
+    ) -> ModelType:
         update: ModelType = self.get_record_schema_raise(query, db)
 
         update_dict = body.dict(exclude_none=True).items()

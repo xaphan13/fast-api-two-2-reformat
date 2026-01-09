@@ -34,8 +34,9 @@ async def add_reader(body: CreateReader, db: AsyncSession = Depends(async_db.get
 # ================================================================================
 # ******************** adding ListBook to the database ***************************
 @reader_aCrud_one.post("/add_list_to_reader", response_model=SchemaListBook)
-async def add_list_to_reader(body: CreateListBook, params: SchemaReader = Depends(),
-                             db: AsyncSession = Depends(async_db.get_db)):
+async def add_list_to_reader(
+    body: CreateListBook, params: SchemaReader = Depends(), db: AsyncSession = Depends(async_db.get_db)
+):
     reader: Reader = await readerDB.get_record_one(params, db)
     if reader is None:
         raise HTTPException(status_code=422, detail=f"reader with {params} not found")
@@ -59,8 +60,9 @@ async def add_book(body: CreateBook, db: AsyncSession = Depends(async_db.get_db)
 # ================================================================================
 # ********************** adding Book to the database *****************************
 @reader_aCrud_one.post("/create_add_book_to_list", response_model=SchemaBook)
-async def create_add_book_to_list(body: CreateBook, params: SchemaAddBook = Depends(),
-                                  db: AsyncSession = Depends(async_db.get_db)):
+async def create_add_book_to_list(
+    body: CreateBook, params: SchemaAddBook = Depends(), db: AsyncSession = Depends(async_db.get_db)
+):
     sch_reader = SchemaReader(id=params.reader_id, nickname=params.reader_nickname)
 
     # reader = await readerDB.get_reader_bookL_one(sch_reader, db)
@@ -79,21 +81,25 @@ async def create_add_book_to_list(body: CreateBook, params: SchemaAddBook = Depe
 
 # ================================================================================
 # ********************** adding Book to the database *****************************
-@reader_aCrud_one.put("/add_exist_book_to_list", response_model=Tuple
-                                [ListBookReaderBooks, SchemaBookWithCategory])
-async def add_new_book_to_list(body_book: SchemaBook,
-                               filterReader: ReaderAddBooks = Depends(),
-                               filterList: ListBookAddBooks = Depends(),
-                               db: AsyncSession = Depends(async_db.get_db)):
+@reader_aCrud_one.put("/add_exist_book_to_list", response_model=Tuple[ListBookReaderBooks, SchemaBookWithCategory])
+async def add_new_book_to_list(
+    body_book: SchemaBook,
+    filterReader: ReaderAddBooks = Depends(),
+    filterList: ListBookAddBooks = Depends(),
+    db: AsyncSession = Depends(async_db.get_db),
+):
     where_reader = readerDB.get_filter_attr(filterReader)  # nickname = reader_nickname
-    where_list = listbookDB.get_filter_attr(filterList)    # list_name= list_name
+    where_list = listbookDB.get_filter_attr(filterList)  # list_name= list_name
     if not where_reader:
         raise HTTPException(status_code=422, detail=f"where_reader = {where_reader} : empty")
 
-    query = (select(ListBook)
-             .options(selectinload(ListBook.reader))
-             .options(selectinload(ListBook.books))
-             .join(Reader).where(and_(*where_reader, *where_list)))
+    query = (
+        select(ListBook)
+        .options(selectinload(ListBook.reader))
+        .options(selectinload(ListBook.books))
+        .join(Reader)
+        .where(and_(*where_reader, *where_list))
+    )
 
     result = await db.execute(query)
     listBooks: list[ListBook] = list(result.scalars().all())
@@ -122,8 +128,7 @@ async def add_new_book_to_list(body_book: SchemaBook,
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
 @reader_aCrud_one.get("/get_reader", response_model=ReaderLists)
-async def get_reader(params: SchemaReader = Depends(),
-                     db: AsyncSession = Depends(async_db.get_db)):
+async def get_reader(params: SchemaReader = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     reader = await readerDB.get_record_rel_one(params, load=[Reader.book_lists], db=db)
     if reader is not None:
         return reader  # {"reader": db_json(reader)}
@@ -132,10 +137,16 @@ async def get_reader(params: SchemaReader = Depends(),
 
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
-@reader_aCrud_one.get("/get_book", response_model=List[SchemaBookWithCategoryLists
-                            | SchemaBookWithLists | SchemaBookWithCategory | SchemaBook])
-async def get_book(params: SchemaBook = Depends(), relation: SchemaGetBookRel = Depends(),
-                   order: OrderbyBook = Depends(), db: AsyncSession = Depends(async_db.get_db)):
+@reader_aCrud_one.get(
+    "/get_book",
+    response_model=List[SchemaBookWithCategoryLists | SchemaBookWithLists | SchemaBookWithCategory | SchemaBook],
+)
+async def get_book(
+    params: SchemaBook = Depends(),
+    relation: SchemaGetBookRel = Depends(),
+    order: OrderbyBook = Depends(),
+    db: AsyncSession = Depends(async_db.get_db),
+):
     list_rel = []
     if relation.select == GetBookRelEnum.lists:
         list_rel = [Book.lists]
@@ -155,8 +166,7 @@ async def get_book(params: SchemaBook = Depends(), relation: SchemaGetBookRel = 
 # ================================================================================
 # ******************* deleting Order to the database *****************************
 @reader_aCrud_one.delete("/delete_all_or_id", response_model=list[int] | None)
-async def delete_all_or_id(params: SchemaDeleteId = Depends(),
-                           db: AsyncSession = Depends(async_db.get_db)):
+async def delete_all_or_id(params: SchemaDeleteId = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     qty_R, qty_L, qty_B, qty_C = 0, 0, 0, 0
     if params.type_del == DeleteEnum.reader:
         qty_R = await readerDB.delete_all_or_id(db, params.id)
@@ -174,27 +184,28 @@ async def delete_all_or_id(params: SchemaDeleteId = Depends(),
 # ++++++++++++++++++++++++++ examples examples examples ++++++++++++++++++++++++++
 # ================================================================================
 # ================================================================================
-@reader_aCrud_one.put("/examples_book_list",
-                      response_model=List[Tuple[SchemaListBook, SchemaReader]])
+@reader_aCrud_one.put("/examples_book_list", response_model=List[Tuple[SchemaListBook, SchemaReader]])
 async def examples_book_list(
-                                # filterReader: ReaderAddBooks = Depends(),
-                                # filterList: ListBookAddBooks = Depends(),
-                                db: AsyncSession = Depends(async_db.get_db)):
+    # filterReader: ReaderAddBooks = Depends(),
+    # filterList: ListBookAddBooks = Depends(),
+    db: AsyncSession = Depends(async_db.get_db),
+):
     # where_reader = readerDB.get_filter_attr(filterReader)
     # where_list = listbookDB.get_filter_attr(filterList)
     # query = (select(ListBook)
-              # .options(selectinload(ListBook.reader))
-              # .join(Reader, ListBook.id < Reader.id)
-              # .where(and_(*where_reader, *where_list))  # .where(*where_list)
-             # )
+    # .options(selectinload(ListBook.reader))
+    # .join(Reader, ListBook.id < Reader.id)
+    # .where(and_(*where_reader, *where_list))  # .where(*where_list)
+    # )
 
-    query = (select(ListBook, Reader)
-             # .join(Reader, ListBook.id > Reader.user_id)
-             .join(Reader, ListBook.reader_id == Reader.id)
-             .where(and_(ListBook.list_name == "aaa", Reader.nickname == "Den"))
-             # .where(and_(ListBook.list_name == "aaa", Reader.id == 34))
-             # .where(and_(ListBook.list_name == "aaa", ListBook.reader_id == 34))
-             )
+    query = (
+        select(ListBook, Reader)
+        # .join(Reader, ListBook.id > Reader.user_id)
+        .join(Reader, ListBook.reader_id == Reader.id)
+        .where(and_(ListBook.list_name == "aaa", Reader.nickname == "Den"))
+        # .where(and_(ListBook.list_name == "aaa", Reader.id == 34))
+        # .where(and_(ListBook.list_name == "aaa", ListBook.reader_id == 34))
+    )
 
     result = await db.execute(query)
 

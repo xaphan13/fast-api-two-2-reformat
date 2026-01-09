@@ -15,6 +15,7 @@ from app22.reader_project.schema_relationship import *
 
 
 from app22.logger_core.config_logger import ConfigLogger
+
 logFC = ConfigLogger.getLogger("FileStdout", "reader_aCrud_two")
 
 
@@ -24,11 +25,14 @@ reader_aCrud_two = APIRouter(prefix="/reader_aCrud_two", tags=["NEW reader_aCrud
 
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
-@reader_aCrud_two.get("/get_subquery_join",  response_model=List[
-                  Tuple[SchemaReader, SchemaListBook | None, SchemaBook | None] |
-                                                Tuple[SchemaReader, SchemaBook] |
-                                            Tuple[SchemaReader, SchemaListBook]
-                                                                 ])
+@reader_aCrud_two.get(
+    "/get_subquery_join",
+    response_model=List[
+        Tuple[SchemaReader, SchemaListBook | None, SchemaBook | None]
+        | Tuple[SchemaReader, SchemaBook]
+        | Tuple[SchemaReader, SchemaListBook]
+    ],
+)
 async def get_subquery_join(params: SchemaReader = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     where_attr: list = readerDB.get_filter_attr(params)
 
@@ -57,11 +61,14 @@ async def get_subquery_join(params: SchemaReader = Depends(), db: AsyncSession =
 
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
-@reader_aCrud_two.get("/get_join_distinct",  response_model=List[
-                  Tuple[SchemaReader, SchemaListBook | None, SchemaBook | None] |
-                                                Tuple[SchemaReader, SchemaBook] |
-                                            Tuple[SchemaReader, SchemaListBook]
-                                                                 ])
+@reader_aCrud_two.get(
+    "/get_join_distinct",
+    response_model=List[
+        Tuple[SchemaReader, SchemaListBook | None, SchemaBook | None]
+        | Tuple[SchemaReader, SchemaBook]
+        | Tuple[SchemaReader, SchemaListBook]
+    ],
+)
 async def get_join_distinct(params: SchemaReader = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     where_attr: list = readerDB.get_filter_attr(params)
 
@@ -70,7 +77,7 @@ async def get_join_distinct(params: SchemaReader = Depends(), db: AsyncSession =
     # query = query.distinct(Reader.id, ListBook.id)
     query = query.distinct(Reader.id, Book.id)
     query = query.join(Reader.book_lists)  # query.outerjoin(Reader.book_lists)
-    query = query.join(ListBook.books)     # query.outerjoin(ListBook.books)
+    query = query.join(ListBook.books)  # query.outerjoin(ListBook.books)
     query = query.order_by(Reader.id, Book.id)
 
     result = await db.execute(query)
@@ -97,8 +104,7 @@ async def get_unique_joinedload(params: SchemaReader = Depends(), db: AsyncSessi
 
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
-@reader_aCrud_two.get("/get_having_cte", response_model=List
-                                [Tuple[SchemaReader, SchemaBook | None, int]])
+@reader_aCrud_two.get("/get_having_cte", response_model=List[Tuple[SchemaReader, SchemaBook | None, int]])
 async def get_having_cte(params: SchemaListBook = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     where_attr: list = readerDB.get_filter_attr(params)  # outerjoin    join
 
@@ -124,11 +130,15 @@ async def get_having_cte(params: SchemaListBook = Depends(), db: AsyncSession = 
 
 # ================================================================================
 # **************** get Reader with ListBook from the database ********************
-@reader_aCrud_two.get("/get_subquery_count_book", response_model=List[
-                                                                   QtyBookReader |
-                                            Tuple[int, SchemaBook, SchemaReader] |
-                                            Tuple[SchemaReader, SchemaBook, int] |
-                                                   Tuple[str | None, int | None]])
+@reader_aCrud_two.get(
+    "/get_subquery_count_book",
+    response_model=List[
+        QtyBookReader
+        | Tuple[int, SchemaBook, SchemaReader]
+        | Tuple[SchemaReader, SchemaBook, int]
+        | Tuple[str | None, int | None]
+    ],
+)
 async def get_subquery_count_book(params: SchemaListBook = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     where_attr: list = readerDB.get_filter_attr(params)  # outerjoin    join
 
@@ -188,6 +198,4 @@ async def download_file(file: DownloadFileReq = Depends()):
     if os.path.exists(f"{dirF}/{file.file_name}") is False:
         raise HTTPException(status_code=404, detail="File not found")
 
-    return FileResponse(path=f"{dirF}/{file.file_name}",
-                        filename=file.file_name,
-                        media_type="application/octet-stream")
+    return FileResponse(path=f"{dirF}/{file.file_name}", filename=file.file_name, media_type="application/octet-stream")

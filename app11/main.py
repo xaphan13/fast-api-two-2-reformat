@@ -28,11 +28,11 @@ app.include_router(ex_assoc_route)
 
 
 def main():
-    """ запуск через uvicorn """
+    """запуск через uvicorn"""
     logFC.info(f"'Start' FastApi = {app}")
     uvicorn.run(app, host="0.0.0.0", port=8000)
     logFC.info(f"'Stop' FastApi = {app}\n'****************************'\n\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
