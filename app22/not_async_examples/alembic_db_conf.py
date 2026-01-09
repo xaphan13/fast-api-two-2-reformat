@@ -14,7 +14,7 @@ from app22.db_core.model.model_reader_assoc import *
 from app22.db_core.base import Base
 
 
-class SessionDB:
+class SessionDB_not_async:
     """methods for working with the database"""
 
     # """URL в файле config.py"""
@@ -48,9 +48,9 @@ class SessionDB:
         )
 
     @staticmethod
-    def get_db():
+    def get_db_alembic():
         """Dependency for getting session"""
-        db = SessionDB.sessionLocal()
+        db = SessionDB_not_async.sessionLocal()
         try:
             yield db
         finally:
@@ -58,4 +58,4 @@ class SessionDB:
 
     @staticmethod
     def get_session():
-        return SessionDB.sessionLocal()
+        return SessionDB_not_async.sessionLocal()
