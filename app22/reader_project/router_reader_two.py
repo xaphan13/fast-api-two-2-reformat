@@ -16,7 +16,7 @@ from app22.reader_project.schema_relationship import *
 
 from app22.config_log import ConfigLogger
 
-logFC = ConfigLogger.get_logger("FileStdout", "reader_aCrud_two")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 reader_aCrud_two = APIRouter(prefix="/reader_aCrud_two", tags=["NEW reader_aCrud_two"])

@@ -18,7 +18,7 @@ from app22.async_many_sql.schema_many_sql import (
 from app22.db_core.db_async import async_db
 from app22.db_core.model.model_new_many_db import Order, Product
 
-logFC = ConfigLogger.get_logger("FileStdout", "new_many_aCrud_one")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 new_many_aCrud_one = APIRouter(prefix="/new_many_aCrud_one", tags=["NEW new_many_aCrud_one"])

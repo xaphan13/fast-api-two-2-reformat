@@ -19,7 +19,7 @@ from app22.db_crud_base.async_user import userDB
 from app22.http_request_routers.data_join import data_addr, data_pers
 
 
-logFC = ConfigLogger.get_logger("FileStdout", "join_one_r")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 join_one_r = APIRouter(prefix="/join_one_r", tags=["NEW join_one_r"])

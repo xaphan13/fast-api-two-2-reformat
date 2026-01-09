@@ -14,7 +14,7 @@ from app22.db_core.model.model_reader_book import ListBook
 from app22.reader_project.schema_relationship import *
 
 
-logFC = ConfigLogger.get_logger("FileStdout", "reader_aCrud_one")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 reader_aCrud_one = APIRouter(prefix="/reader_aCrud_one", tags=["NEW reader_aCrud_one"])
