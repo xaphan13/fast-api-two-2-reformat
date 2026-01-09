@@ -26,11 +26,11 @@ class ConfigLogger:
             logging.basicConfig(level=logging.INFO, handlers=[])
             ConfigLogger.isSetting = True
 
-    @staticmethod
-    @dispatch(str)
-    def getLogger(nameMod):
-        """получение базового логгера"""
-        return logging.getLogger(ConfigLogger.baseNameLogger + "." + nameMod)
+    # @staticmethod
+    # @dispatch(str)
+    # def getLogger22(nameMod):
+    #     """получение базового логгера"""
+    #     return logging.getLogger(ConfigLogger.baseNameLogger + "." + nameMod)
 
     @staticmethod
     @dispatch(str, str)

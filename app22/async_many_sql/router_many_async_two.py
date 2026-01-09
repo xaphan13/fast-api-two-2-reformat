@@ -1,6 +1,6 @@
 from sqlalchemy import CursorResult, Delete, Update
 
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession

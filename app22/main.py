@@ -1,4 +1,4 @@
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 import uvicorn
 
 from app22.core import get_app_fastapi

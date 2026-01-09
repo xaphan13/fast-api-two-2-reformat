@@ -1,4 +1,4 @@
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 from fastapi import APIRouter, Depends
 from sqlalchemy.sql import select
 from sqlalchemy.orm import selectinload

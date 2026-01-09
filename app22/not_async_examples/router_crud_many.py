@@ -1,4 +1,3 @@
-from app22.logger_core.config_logger import ConfigLogger
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -14,8 +13,8 @@ from app22.not_async_examples.alembic_db_conf import SessionDB_not_async
 from app22.db_crud_base.new_crud_many import order_crud
 from app22.db_core.model.model_new_many_db import Order
 
-
-logFC = ConfigLogger.getLogger("FileStdout", "new_many_crud")
+# from app22.config_logger import ConfigLogger
+# logFC = ConfigLogger.getLogger("FileStdout", "new_many_crud")
 
 not_async_many_crud = APIRouter(prefix="/new_many_crud", tags=["NEW new_many_crud"])
 

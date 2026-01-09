@@ -14,7 +14,7 @@ from app22.db_core.model.model_reader_book import ListBook
 from app22.reader_project.schema_relationship import *
 
 
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 
 logFC = ConfigLogger.getLogger("FileStdout", "reader_aCrud_two")
 

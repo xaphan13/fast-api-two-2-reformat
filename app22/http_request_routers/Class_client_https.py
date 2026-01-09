@@ -1,13 +1,13 @@
-from app22.logger_core.config_logger import ConfigLogger
 import asyncio
 from asyncio import Task
 from aiohttp import ClientSession
 from pydantic import BaseModel
 from typing import Callable, Optional
 
+# from app22.config_logger import ConfigLogger
 
-logFC = ConfigLogger.getLogger("FileStdout", "ClientHTTPS")
-logF = ConfigLogger.getLogger("OnlyFile", "ClientHTTPS")
+# logFC = ConfigLogger.getLogger("FileStdout", "ClientHTTPS")
+# logF = ConfigLogger.getLogger("OnlyFile", "ClientHTTPS")
 
 
 class RespServer(BaseModel):

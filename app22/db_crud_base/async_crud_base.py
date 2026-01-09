@@ -16,9 +16,9 @@ ReaderType = TypeVar("ReaderType", bound=BaseModel)
 UpdateType = TypeVar("UpdateType", bound=BaseModel)
 DeleteType = TypeVar("DeleteType", bound=BaseModel)
 
-from app22.logger_core.config_logger import ConfigLogger
+# from app22.config_logger import ConfigLogger
 
-logFC = ConfigLogger.getLogger("FileStdout", "AsyncBaseCRUD")
+# logFC = ConfigLogger.getLogger("FileStdout", "AsyncBaseCRUD")
 
 
 class AddResult:

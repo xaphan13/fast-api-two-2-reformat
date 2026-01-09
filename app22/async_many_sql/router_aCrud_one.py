@@ -1,5 +1,5 @@
 from app22.db_crud_base.async_crud_order import order_async, product_async
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession

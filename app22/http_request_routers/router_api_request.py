@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app22.logger_core.config_logger import ConfigLogger
+from app22.config_logger import ConfigLogger
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 

@@ -1,4 +1,3 @@
-from app22.logger_core.config_logger import ConfigLogger
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Column
@@ -8,8 +7,8 @@ from app22.core.template_files.templates_schema import Resp, Create, Get, Orderb
 from app22.core.template_files.templates_async_crud import templatesDB
 from app22.core.template_files.templates_model import TableName
 
-
-logFC = ConfigLogger.getLogger("FileStdout", "templates_router")
+# from app22.config_logger import ConfigLogger
+# logFC = ConfigLogger.getLogger("FileStdout", "templates_router")
 
 
 templates_router = APIRouter(prefix="/templates_router", tags=["NEW templates_router"])
