@@ -6,12 +6,12 @@ from sqlalchemy.sql import select
 from sqlalchemy import and_, Row
 from typing import Tuple, Sequence
 
-from app22.reader_project.schema_reader import *
+from app22.async_reader_project.schema_reader import *
 from app22.db_core.db_async import async_db
 from app22.db_crud_base.async_crud_base import AddResult
 from app22.db_crud_base.async_reader import readerDB, listbookDB, bookDB, categoryDB
 from app22.db_core.model.model_reader_book import ListBook
-from app22.reader_project.schema_relationship import *
+from app22.async_reader_project.schema_relationship import *
 
 
 logFC = ConfigLogger.get_logger("FileStdout")

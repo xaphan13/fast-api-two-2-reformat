@@ -5,7 +5,7 @@ from asyncio import current_task
 from app22.core.config import DATABASE_URL_ASYNC
 
 # """this is so that alembic can see the models and create tables"""
-from app22.db_core.model.model_new_tasks import *
+# from app22.db_core.model.model_new_tasks import *
 from app22.db_core.model.model_new_ex_db import *
 from app22.db_core.model.model_new_many_db import *
 from app22.db_core.base import Base
@@ -21,7 +21,16 @@ class AsyncSessionDB:
 
     def get_models(self):
         """this is so that alembic can see the models and create tables"""
-        return Base, TaskOne, TaskTwo, User, Post, Order, Product, OrderProductAssociation
+        return (
+            Base,
+            # TaskOne,
+            # TaskTwo,
+            User,
+            Post,
+            Order,
+            Product,
+            OrderProductAssociation,
+        )
 
     async def get_db(self) -> AsyncGenerator[AsyncSession, Any]:
         """Dependency for getting session"""

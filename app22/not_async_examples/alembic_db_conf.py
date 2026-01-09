@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from app22.core.config import DATABASE_URL
 
 # """this is so that alembic can see the models and create tables"""
-from app22.db_core.model.model_new_tasks import *
+# from app22.db_core.model.model_new_tasks import *
 from app22.db_core.model.model_new_ex_db import *
 from app22.db_core.model.model_new_many_db import *
 from app22.db_core.model.model_join import *
@@ -28,8 +28,8 @@ class SessionDB_not_async:
         """this is so that alembic can see the models and create tables"""
         return (
             Base,
-            TaskOne,
-            TaskTwo,
+            # TaskOne,
+            # TaskTwo,
             User,
             Post,
             JoinPerson,

@@ -3,7 +3,7 @@ from typing import Optional, List, Self
 from pydantic import BaseModel, Field
 
 from app22.db_core.model.model_reader_book import Reader, Book
-from app22.reader_project.schema_reader import SchemaListBook, SchemaReader, SchemaCategory, SchemaBook
+from app22.async_reader_project.schema_reader import SchemaListBook, SchemaReader, SchemaCategory, SchemaBook
 
 
 # ==============================================================================

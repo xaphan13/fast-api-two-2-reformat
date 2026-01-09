@@ -12,9 +12,9 @@ from app22.not_async_examples.router_crud_many import not_async_many_crud
 from app22.async_many_sql.router_many_async_one import new_many_async_one
 from app22.async_many_sql.router_many_async_two import new_many_async_two
 from app22.async_many_sql.router_aCrud_one import new_many_aCrud_one
-from app22.join_tables.router_join_one import join_one_r
-from app22.reader_project.router_reader_one import reader_aCrud_one
-from app22.reader_project.router_reader_two import reader_aCrud_two
+from app22.async_join_tables.router_join_one import join_one_r
+from app22.async_reader_project.router_reader_one import reader_aCrud_one
+from app22.async_reader_project.router_reader_two import reader_aCrud_two
 
 import uvicorn
 

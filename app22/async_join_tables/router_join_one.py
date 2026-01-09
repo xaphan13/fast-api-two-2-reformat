@@ -5,8 +5,8 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from app22.db_core.db_async import async_db
 
-from app22.join_tables.schema_join import CreateJoinPerson, GetJoinPerson, CreateJoinAddress, GetJoinAddress
-from app22.join_tables.schema_user_post import CreateUser, CreatePost, GetUser, RespPost, GetPost
+from app22.async_join_tables.schema_join import CreateJoinPerson, GetJoinPerson, CreateJoinAddress, GetJoinAddress
+from app22.async_join_tables.schema_user_post import CreateUser, CreatePost, GetUser, RespPost, GetPost
 
 from app22.db_core.model.model_join import JoinPerson, JoinAddress
 from app22.db_core.model.temp_admin import Admin_list, Admin_work

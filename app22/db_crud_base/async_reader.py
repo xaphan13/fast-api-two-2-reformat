@@ -1,6 +1,6 @@
 from app22.db_crud_base.async_crud_base import AsyncBaseCRUD, SqlType, ReaderType, CreateType
 from app22.db_core.model.model_reader_book import Reader, ListBook, Book, Category
-from app22.reader_project.schema_reader import (
+from app22.async_reader_project.schema_reader import (
     CreateReader,
     SchemaReader,
     SchemaListBook,
