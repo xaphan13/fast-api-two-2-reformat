@@ -1,6 +1,6 @@
 from sqlalchemy import CursorResult, Delete, Update
 
-from app22.config_logger import ConfigLogger
+from app22.config_log import ConfigLogger
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -13,7 +13,7 @@ from app22.db_core.db_async import async_db
 from app22.db_core.model.model_new_many_db import Order
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "new_many_async_two")
+logFC = ConfigLogger.get_logger("FileStdout", "new_many_async_two")
 
 
 new_many_async_two = APIRouter(prefix="/new_many_async_two", tags=["NEW new_many_async_two"])

@@ -1,4 +1,4 @@
-from app22.config_logger import ConfigLogger
+from app22.config_log import ConfigLogger
 import uvicorn
 
 from app22.core import get_app_fastapi
@@ -14,7 +14,7 @@ from app22.reader_project.router_reader_one import reader_aCrud_one
 from app22.reader_project.router_reader_two import reader_aCrud_two
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "main22")
+logFC = ConfigLogger.get_logger("FileStdout", "main22")
 
 
 app = get_app_fastapi()  # FastAPI()  # app = FastAPI()

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app22.config_logger import ConfigLogger
+from app22.config_log import ConfigLogger
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 
@@ -11,7 +11,7 @@ from app22.http_request_routers.Class_client_https import (
 )
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "api_request")
+logFC = ConfigLogger.get_logger("FileStdout", "api_request")
 
 
 api_request = APIRouter(prefix="/api_request", tags=["NEW api_request"])

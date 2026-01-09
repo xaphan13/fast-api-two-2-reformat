@@ -1,5 +1,5 @@
 from app22.db_crud_base.async_crud_order import order_async, product_async
-from app22.config_logger import ConfigLogger
+from app22.config_log import ConfigLogger
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +18,7 @@ from app22.async_many_sql.schema_many_sql import (
 from app22.db_core.db_async import async_db
 from app22.db_core.model.model_new_many_db import Order, Product
 
-logFC = ConfigLogger.getLogger("FileStdout", "new_many_aCrud_one")
+logFC = ConfigLogger.get_logger("FileStdout", "new_many_aCrud_one")
 
 
 new_many_aCrud_one = APIRouter(prefix="/new_many_aCrud_one", tags=["NEW new_many_aCrud_one"])

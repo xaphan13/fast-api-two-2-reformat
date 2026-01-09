@@ -1,6 +1,6 @@
 from sqlalchemy.orm import joinedload
 
-from app22.config_logger import ConfigLogger
+from app22.config_log import ConfigLogger
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,7 +23,7 @@ from app22.db_core.db_async import async_db
 from app22.db_core.model.model_new_many_db import Order, Product
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "new_many_async_one")
+logFC = ConfigLogger.get_logger("FileStdout", "new_many_async_one")
 
 
 new_many_async_one = APIRouter(prefix="/new_many_async_one", tags=["NEW new_many_async_one"])

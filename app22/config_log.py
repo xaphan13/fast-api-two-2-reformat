@@ -34,7 +34,7 @@ class ConfigLogger:
 
     @staticmethod
     @dispatch(str, str)
-    def getLogger(nameBase, nameMod):
+    def get_logger(nameBase, nameMod):
         """nameBase берётся из словаря = 'loggers'
         OnlyFile - логгер будет писать в файл, в консоль не будет
         Stdout - только в консоль
