@@ -1,9 +1,7 @@
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
-
-from typing import Optional, Generic, TypeVar, Type, Any
+from typing import Optional, Generic, TypeVar, Type
 from pydantic import BaseModel
-
 from sqlalchemy import Row, Column
 from sqlalchemy.orm import Session
 
@@ -67,16 +65,20 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, ReadSchemaType, UpdateSchema
     # -----------------------------------------------------------------------------------
     def get_record_all(self, db: Session, order_by_list: list[Column[ModelType]] = None) -> list[Row[ModelType]]:
         if order_by_list is None:
-            order_by_list: list[Column[Any]] = [self.model.id]
-        records: list[Row[ModelType]] = db.query(self.model).order_by(*order_by_list).all()
+            records: list[Row[ModelType]] = db.query(self.model).all()
+        else:
+            records: list[Row[ModelType]] = db.query(self.model).order_by(*order_by_list).all()
         return records
 
     def get_record_part(
         self, begin: int, length: int, db: Session, order_by_list: list[Column[ModelType]] = None
     ) -> list[Row[ModelType]]:
         if order_by_list is None:
-            order_by_list: list[Column[Any]] = [self.model.id]
-        records: list[Row[ModelType]] = db.query(self.model).order_by(*order_by_list).offset(begin).limit(length).all()
+            records: list[Row[ModelType]] = db.query(self.model).offset(begin).limit(length).all()
+        else:
+            records: list[Row[ModelType]] = (
+                db.query(self.model).order_by(*order_by_list).offset(begin).limit(length).all()
+            )
         return records
 
     # updating record from the database *************************************************

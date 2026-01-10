@@ -1,9 +1,23 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func, UniqueConstraint
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    DateTime,
+    ForeignKey,
+    func,
+    UniqueConstraint,
+)
+
+from sqlalchemy.orm import (
+    relationship,
+    Mapped,
+)
+
 from datetime import datetime
-from typing import TYPE_CHECKING
 
 from app22.db_core.base import Base
+
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from app22.db_core.model.model_reader_assoc import ListBookAssociation
@@ -16,11 +30,13 @@ class Reader(Base):
 
     nickname = Column(String(30), nullable=False, unique=True)
     user_id = Column(Integer(), default=0, nullable=False)
-    # TODO: user_id = ForeignKey('users.id', ...
-    #       Need to add a foreign key to the "users" table.
 
     # association between Reader -> ListBook = ForeignKey('readers.id',
-    book_lists: Mapped[list["ListBook"]] = relationship("ListBook", back_populates="reader", cascade="all, delete")
+    book_lists: Mapped[list["ListBook"]] = relationship(
+        "ListBook",
+        back_populates="reader",
+        cascade="all, delete",
+    )
 
     def __repr__(self):
         return (
@@ -37,21 +53,39 @@ class ListBook(Base):
     __table_args__ = (UniqueConstraint("reader_id", "list_name", name="idx_unique_reader_list"),)
 
     id = Column(Integer(), primary_key=True)
-    time_created = Column(DateTime(timezone=True), default=datetime.utcnow, server_default=func.now())
+
+    time_created = Column(
+        DateTime(timezone=True),
+        default=datetime.utcnow,
+        server_default=func.now(),
+    )
 
     list_name = Column(String(30), nullable=False)
     description = Column(String(200), nullable=False)
 
     # association ForeignKey between ListBook -> Reader
-    reader_id = Column(Integer(), ForeignKey("readers.id", ondelete="CASCADE"), nullable=False)
-    reader: Mapped["Reader"] = relationship("Reader", back_populates="book_lists")
+    reader_id = Column(
+        Integer(),
+        ForeignKey("readers.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    reader: Mapped["Reader"] = relationship(
+        "Reader",
+        back_populates="book_lists",
+    )
 
     # association many to many -> ListBookAssociation(ForeignKey('books.id',
-    books: Mapped[list["Book"]] = relationship("Book", secondary="list_book_association", back_populates="lists")
+    books: Mapped[list["Book"]] = relationship(
+        "Book",
+        secondary="list_book_association",
+        back_populates="lists",
+    )
 
     # association between ListBook -> ListBookAssociation = ForeignKey('listbooks.id',
     book_associations: Mapped[list["ListBookAssociation"]] = relationship(
-        back_populates="list_book", cascade="all, delete", overlaps="books"
+        back_populates="list_book",
+        cascade="all, delete",
+        overlaps="books",
     )
 
     def __repr__(self):
@@ -77,17 +111,24 @@ class Book(Base):
 
     # association between Book -> Category = BookCategoryAssociation(ForeignKey('books.id',
     categories: Mapped[list["Category"]] = relationship(
-        "Category", secondary="book_category_association", back_populates="books"
+        "Category",
+        secondary="book_category_association",
+        back_populates="books",
     )
 
     # association many to many-> ListBookAssociation(ForeignKey('listbooks.id',
     lists: Mapped[list["ListBook"]] = relationship(
-        "ListBook", secondary="list_book_association", back_populates="books", overlaps="book_associations"
+        "ListBook",
+        secondary="list_book_association",
+        back_populates="books",
+        overlaps="book_associations",
     )
 
     # association between Book -> ListBookAssociation = ForeignKey('books.id',
     list_associations: Mapped[list["ListBookAssociation"]] = relationship(
-        back_populates="book", cascade="all, delete", overlaps="books,lists"
+        back_populates="book",
+        cascade="all, delete",
+        overlaps="books,lists",
     )
 
     def __repr__(self):
@@ -111,7 +152,9 @@ class Category(Base):
 
     # association between Category -> Book = BookCategoryAssociation(ForeignKey('categories.id'),
     books: Mapped[list["Book"]] = relationship(
-        "Book", secondary="book_category_association", back_populates="categories"
+        "Book",
+        secondary="book_category_association",
+        back_populates="categories",
     )
 
     def __repr__(self):

@@ -2,10 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app22.db_core.db_async import async_db
 
-from app22.core.template_files.templates_schema import Resp, Create, Get
-
-# from app22.config_logger import ConfigLogger
-# logFC = ConfigLogger.getLogger("FileStdout", "templates_router")
+from app22.template_files.templates_schema import Resp, Create, Get
 
 
 templates_router = APIRouter(prefix="/templates_router", tags=["NEW templates_router"])

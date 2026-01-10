@@ -1,14 +1,20 @@
 from typing import Any, AsyncGenerator
 
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker, async_scoped_session
+from sqlalchemy.ext.asyncio import (
+    create_async_engine,
+    AsyncSession,
+    async_sessionmaker,
+    async_scoped_session,
+)
+
 from asyncio import current_task
-from app22.core.config import DATABASE_URL_ASYNC
 
 # """this is so that alembic can see the models and create tables"""
-# from app22.db_core.model.model_new_tasks import *
 from app22.db_core.model.model_new_ex_db import *
 from app22.db_core.model.model_new_many_db import *
 from app22.db_core.base import Base
+
+from app22.core.config import DATABASE_URL_ASYNC
 
 
 class AsyncSessionDB:

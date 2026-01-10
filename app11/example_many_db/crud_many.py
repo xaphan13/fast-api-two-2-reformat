@@ -1,14 +1,13 @@
 from app11.example_many_db.crud_base import CRUDBase
 from app11.example_many_db.schema_many_db import (
+    AssociationGetQuery,
     OrderCreateBody,
     OrderGetQuery,
     OrderUpdateBody,
     ProductCreateBody,
     ProductGetQuery,
     ProductUpdateBody,
-    AssociationGetQuery,
 )
-
 from app11.example_many_db.model_many_db import Order, Product, OrderProductAssociation
 
 

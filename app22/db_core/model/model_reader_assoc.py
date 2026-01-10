@@ -1,9 +1,22 @@
-from sqlalchemy import Column, Integer, DateTime, ForeignKey, UniqueConstraint, func
-from sqlalchemy.orm import relationship, Mapped
+from sqlalchemy import (
+    Column,
+    Integer,
+    DateTime,
+    ForeignKey,
+    UniqueConstraint,
+    func,
+)
+
+from sqlalchemy.orm import (
+    relationship,
+    Mapped,
+)
+
 from datetime import datetime
-from typing import TYPE_CHECKING
 
 from app22.db_core.base import Base
+
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from app22.db_core.model.model_reader_book import ListBook, Book
@@ -14,17 +27,38 @@ class ListBookAssociation(Base):
     __table_args__ = (UniqueConstraint("list_id", "book_id", name="idx_unique_list_book"),)
 
     id = Column(Integer(), primary_key=True)
-    time_add = Column(DateTime(timezone=True), default=datetime.utcnow, server_default=func.now())
+
+    time_add = Column(
+        DateTime(timezone=True),
+        default=datetime.utcnow,
+        server_default=func.now(),
+    )
 
     # association secondary between Association -> ListBook
-    list_id = Column(Integer(), ForeignKey("listbooks.id", ondelete="CASCADE"), nullable=False)
+    list_id = Column(
+        Integer(),
+        ForeignKey("listbooks.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
     # association secondary between Association -> Book
-    book_id = Column(Integer(), ForeignKey("books.id", ondelete="CASCADE"), nullable=False)
+    book_id = Column(
+        Integer(),
+        ForeignKey("books.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
-    list_book: Mapped["ListBook"] = relationship("ListBook", back_populates="book_associations", overlaps="books,lists")
+    list_book: Mapped["ListBook"] = relationship(
+        "ListBook",
+        back_populates="book_associations",
+        overlaps="books,lists",
+    )
 
-    book: Mapped["Book"] = relationship("Book", back_populates="list_associations", overlaps="books,lists")
+    book: Mapped["Book"] = relationship(
+        "Book",
+        back_populates="list_associations",
+        overlaps="books,lists",
+    )
 
     def __repr__(self):
         return (
@@ -40,10 +74,18 @@ class BookCategoryAssociation(Base):
     id = Column(Integer(), primary_key=True)
 
     # association secondary between Association -> Book
-    book_id = Column(Integer(), ForeignKey("books.id", ondelete="CASCADE"), nullable=False)
+    book_id = Column(
+        Integer(),
+        ForeignKey("books.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
     # association secondary between Association -> Category
-    category_id = Column(Integer(), ForeignKey("categories.id", ondelete="CASCADE"), nullable=False)
+    category_id = Column(
+        Integer(),
+        ForeignKey("categories.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
     def __repr__(self):
         return f"BookCategoryAssociation(id={self.id}, book_id={self.book_id}, category_id={self.category_id})"

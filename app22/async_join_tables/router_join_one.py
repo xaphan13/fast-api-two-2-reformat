@@ -9,7 +9,7 @@ from app22.async_join_tables.schema_join import CreateJoinPerson, GetJoinPerson,
 from app22.async_join_tables.schema_user_post import CreateUser, CreatePost, GetUser, RespPost, GetPost
 
 from app22.db_core.model.model_join import JoinPerson, JoinAddress
-from app22.db_core.model.temp_admin import Admin_list, Admin_work
+from app22.db_core.model.model_admin import Admin_list, Admin_work
 from app22.db_core.model.model_new_ex_db import User, Post
 
 from app22.db_crud_base.async_join_address import addrDB
@@ -90,9 +90,6 @@ async def get_person(db: AsyncSession = Depends(async_db.get_db)):
     return {}
 
 
-# ______________________________________________________________________________
-
-
 # ==============================================================================
 # +++++++++++++++++ create_person_addr delete_person_addr ++++++++++++++++++++++
 # ------------------------------------------------------------------------------
@@ -161,7 +158,6 @@ async def fixing_work_admin(db: AsyncSession = Depends(async_db.get_db)):
     logFC.info(f"fixing_work_admin  {add_work} {add_work.admin_id}")
 
     add_work.admin_worked.append(Admin_work(type_work="Registration", callback_data=callback_data))
-    # add_work.admin_worked = [Admin_work(type_work='Registration', callback_data=callback_data)]
 
     # work = Admin_work(admin_id=add_work.admin_id, type_work='Registration', callback_data=callback_data)
     # work = Admin_work(admin_lists=add_work, type_work='Registration', callback_data=callback_data)
@@ -170,6 +166,3 @@ async def fixing_work_admin(db: AsyncSession = Depends(async_db.get_db)):
     await db.commit()
 
     return {}
-
-
-# ______________________________________________________________________________

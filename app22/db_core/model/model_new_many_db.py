@@ -1,7 +1,17 @@
-from sqlalchemy import Column, DateTime, Integer, String, UniqueConstraint, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Integer,
+    String,
+    UniqueConstraint,
+    ForeignKey,
+)
 from sqlalchemy.sql import func
+
+from sqlalchemy.orm import relationship
+
 from datetime import datetime
+
 from app22.db_core.base import Base
 
 
@@ -9,18 +19,29 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer(), primary_key=True, index=True)
-    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, server_default=func.now())
+
+    created_at = Column(
+        DateTime(timezone=True),
+        default=datetime.utcnow,
+        server_default=func.now(),
+    )
 
     promocode = Column(String(50))
 
     # association between Order -> Association
     products_details = relationship(
-        "OrderProductAssociation", back_populates="order", cascade="all, delete", overlaps="orders"
+        "OrderProductAssociation",
+        back_populates="order",
+        cascade="all, delete",
+        overlaps="orders",
     )
 
     # association many to many
     products = relationship(
-        "Product", secondary="order_product_association", back_populates="orders", overlaps="products_details"
+        "Product",
+        secondary="order_product_association",
+        back_populates="orders",
+        overlaps="products_details",
     )
 
     def __str__(self):
@@ -38,17 +59,23 @@ class Product(Base):
 
     # association between Product -> Association
     orders_details = relationship(
-        "OrderProductAssociation", back_populates="product", cascade="all, delete", overlaps="products"
+        "OrderProductAssociation",
+        back_populates="product",
+        cascade="all, delete",
+        overlaps="products",
     )
 
     # association many to many
     orders = relationship(
-        "Order", secondary="order_product_association", back_populates="products", overlaps="orders_details"
+        "Order",
+        secondary="order_product_association",
+        back_populates="products",
+        overlaps="orders_details",
     )
 
     def __str__(self):
         return (
-            f"{self.__class__.__name__}(id={self.id}, name={self.name},"
+            f"{self.__class__.__name__}(id={self.id}, name={self.name}, "
             f"description={self.description}, price={self.price})"
         )
 
@@ -62,14 +89,30 @@ class OrderProductAssociation(Base):
     count = Column(Integer(), default=1, server_default="1")
     unit_price = Column(Integer(), default=0, server_default="0")
 
-    order_id = Column(Integer(), ForeignKey("orders.id", ondelete="CASCADE"), nullable=False)
-    product_id = Column(Integer(), ForeignKey("products.id", ondelete="CASCADE"), nullable=False)
+    order_id = Column(
+        Integer(),
+        ForeignKey("orders.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    product_id = Column(
+        Integer(),
+        ForeignKey("products.id", ondelete="CASCADE"),
+        nullable=False,
+    )
 
     # association between Assocation -> Order
-    order = relationship("Order", back_populates="products_details", overlaps="orders, products")
+    order = relationship(
+        "Order",
+        back_populates="products_details",
+        overlaps="orders, products",
+    )
 
     # association between Assocation -> Product
-    product = relationship("Product", back_populates="orders_details", overlaps="orders, products")
+    product = relationship(
+        "Product",
+        back_populates="orders_details",
+        overlaps="orders, products",
+    )
 
     # Disable warning about delete operation
     # __mapper_args__ = {

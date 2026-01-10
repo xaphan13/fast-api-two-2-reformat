@@ -7,7 +7,7 @@ from app22.core.config import DATABASE_URL
 from app22.db_core.model.model_new_ex_db import *
 from app22.db_core.model.model_new_many_db import *
 from app22.db_core.model.model_join import *
-from app22.db_core.model.temp_admin import *
+from app22.db_core.model.model_admin import *
 from app22.db_core.model.model_reader_book import *
 from app22.db_core.model.model_reader_assoc import *
 

@@ -1,7 +1,9 @@
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
+
 from typing import Optional, Generic, TypeVar, Type
 from pydantic import BaseModel
+
 from sqlalchemy import Row, Column
 from sqlalchemy.orm import Session
 
@@ -15,7 +17,15 @@ UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 DeleteSchemaType = TypeVar("DeleteSchemaType", bound=BaseModel)
 
 
-class NewCRUDBase(Generic[ModelType, CreateSchemaType, ReadSchemaType, UpdateSchemaType, DeleteSchemaType]):
+class NewCRUDBase(
+    Generic[
+        ModelType,
+        CreateSchemaType,
+        ReadSchemaType,
+        UpdateSchemaType,
+        DeleteSchemaType,
+    ]
+):
     def __init__(self, model: Type[ModelType]):
         self.model: Type[ModelType] = model
 

@@ -28,16 +28,16 @@ services:
             - FLOWER_PORT=5801
 
 #----------------------------------------------------------------------------------
-    flower_redis_two:
-        container_name: flower_new_two
-        image: mher/flower:0.9.7
-        command: ['flower', '--url_prefix=flower_two']
-        networks:
-            my_network:
-                ipv4_address: 172.20.0.42
-        environment:
-            - CELERY_BROKER_URL=redis://redis_new:6379/2
-            - FLOWER_PORT=5802
+#    flower_redis_two:
+#        container_name: flower_new_two
+#        image: mher/flower:0.9.7
+#        command: ['flower', '--url_prefix=flower_two']
+#        networks:
+#            my_network:
+#                ipv4_address: 172.20.0.42
+#        environment:
+#            - CELERY_BROKER_URL=redis://redis_new:6379/2
+#            - FLOWER_PORT=5802
 
 #----------------------------------------------------------------------------------
 networks:

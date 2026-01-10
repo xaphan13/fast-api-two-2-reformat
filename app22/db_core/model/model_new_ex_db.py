@@ -1,7 +1,16 @@
-from sqlalchemy import Column, DateTime, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Integer,
+    String,
+    ForeignKey,
+)
 from sqlalchemy.sql import func
+
+from sqlalchemy.orm import relationship
+
 from datetime import datetime
+
 from app22.db_core.base import Base
 
 
@@ -36,6 +45,7 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, index=True)
+
     time_created = Column(
         DateTime(timezone=True),
         default=datetime.utcnow,
@@ -47,7 +57,11 @@ class Post(Base):
 
     user_id = Column(
         Integer(),
-        ForeignKey("users.id", ondelete="CASCADE", onupdate="CASCADE"),
+        ForeignKey(
+            "users.id",
+            ondelete="CASCADE",
+            onupdate="CASCADE",
+        ),
         nullable=False,
     )
     author = relationship("User", back_populates="posts")
