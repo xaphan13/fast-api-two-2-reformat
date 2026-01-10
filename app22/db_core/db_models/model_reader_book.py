@@ -1,21 +1,20 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Column,
     Integer,
     String,
-    DateTime,
     ForeignKey,
-    func,
     UniqueConstraint,
 )
 
 from sqlalchemy.orm import (
-    relationship,
     Mapped,
+    relationship,
 )
 
-from datetime import datetime
-
 from app22.db_core.base import Base
+from app22.db_core.db_models.type_for_models import time_stamp_utc
 
 from typing import TYPE_CHECKING
 
@@ -54,11 +53,7 @@ class ListBook(Base):
 
     id = Column(Integer(), primary_key=True)
 
-    time_created = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
-    )
+    time_created: Mapped[time_stamp_utc]
 
     list_name = Column(String(30), nullable=False)
     description = Column(String(200), nullable=False)

@@ -1,20 +1,19 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Column,
     Integer,
-    DateTime,
     ForeignKey,
     UniqueConstraint,
-    func,
 )
 
 from sqlalchemy.orm import (
-    relationship,
     Mapped,
+    relationship,
 )
 
-from datetime import datetime
-
 from app22.db_core.base import Base
+from app22.db_core.db_models.type_for_models import time_stamp_utc
 
 from typing import TYPE_CHECKING
 
@@ -28,11 +27,7 @@ class ListBookAssociation(Base):
 
     id = Column(Integer(), primary_key=True)
 
-    time_add = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
-    )
+    time_add: Mapped[time_stamp_utc]
 
     # association secondary between Association -> ListBook
     list_id = Column(

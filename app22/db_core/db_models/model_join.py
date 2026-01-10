@@ -1,25 +1,29 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Column,
-    DateTime,
     Integer,
     String,
 )
-from sqlalchemy.sql import func
 
-from datetime import datetime
+from sqlalchemy.orm import (
+    Mapped,
+)
 
 from app22.db_core.base import Base
+from app22.db_core.db_models.type_for_models import time_stamp_utc
 
 
 class JoinPerson(Base):
     __tablename__ = "joinperson"
 
-    id = Column(Integer(), primary_key=True, index=True)
-    time_created = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
+    id = Column(
+        Integer(),
+        primary_key=True,
+        index=True,
     )
+
+    time_created: Mapped[time_stamp_utc]
 
     name = Column(String(20))
     surname = Column(String(20))
@@ -35,12 +39,13 @@ class JoinPerson(Base):
 class JoinAddress(Base):
     __tablename__ = "joinaddress"
 
-    id = Column(Integer(), primary_key=True, index=True)
-    time_created = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
+    id = Column(
+        Integer(),
+        primary_key=True,
+        index=True,
     )
+
+    time_created: Mapped[time_stamp_utc]
 
     city = Column(String(20))
     street = Column(String(20))

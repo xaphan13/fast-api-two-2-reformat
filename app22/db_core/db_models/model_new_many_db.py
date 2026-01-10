@@ -1,30 +1,32 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Column,
-    DateTime,
     Integer,
     String,
     UniqueConstraint,
     ForeignKey,
 )
-from sqlalchemy.sql import func
 
-from sqlalchemy.orm import relationship
-
-from datetime import datetime
+from sqlalchemy.orm import (
+    Mapped,
+    relationship,
+)
 
 from app22.db_core.base import Base
+from app22.db_core.db_models.type_for_models import time_stamp_utc
 
 
 class Order(Base):
     __tablename__ = "orders"
 
-    id = Column(Integer(), primary_key=True, index=True)
-
-    created_at = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
+    id = Column(
+        Integer(),
+        primary_key=True,
+        index=True,
     )
+
+    created_at: Mapped[time_stamp_utc]
 
     promocode = Column(String(50))
 
@@ -51,7 +53,11 @@ class Order(Base):
 class Product(Base):
     __tablename__ = "products"
 
-    id = Column(Integer(), primary_key=True, index=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+        index=True,
+    )
 
     name = Column(String(100))
     description = Column(String(100))
@@ -84,7 +90,11 @@ class OrderProductAssociation(Base):
     __tablename__ = "order_product_association"
     __table_args__ = (UniqueConstraint("order_id", "product_id", name="idx_unique_order_product"),)
 
-    id = Column(Integer(), primary_key=True, index=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+        index=True,
+    )
 
     count = Column(Integer(), default=1, server_default="1")
     unit_price = Column(Integer(), default=0, server_default="0")
@@ -94,6 +104,7 @@ class OrderProductAssociation(Base):
         ForeignKey("orders.id", ondelete="CASCADE"),
         nullable=False,
     )
+
     product_id = Column(
         Integer(),
         ForeignKey("products.id", ondelete="CASCADE"),

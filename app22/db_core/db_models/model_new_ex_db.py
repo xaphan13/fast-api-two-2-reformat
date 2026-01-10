@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Column,
-    DateTime,
     Integer,
     String,
     ForeignKey,
 )
-from sqlalchemy.sql import func
 
-from sqlalchemy.orm import relationship
-
-from datetime import datetime
+from sqlalchemy.orm import (
+    Mapped,
+    relationship,
+)
 
 from app22.db_core.base import Base
+from app22.db_core.db_models.type_for_models import time_stamp_utc
 
 
 class User(Base):
@@ -46,11 +48,7 @@ class Post(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    time_created = Column(
-        DateTime(timezone=True),
-        default=datetime.utcnow,
-        server_default=func.now(),
-    )
+    time_created: Mapped[time_stamp_utc]
 
     title = Column(String())
     content = Column(String())

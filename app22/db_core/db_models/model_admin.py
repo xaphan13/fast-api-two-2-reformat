@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from sqlalchemy import (
     Integer,
     String,
@@ -7,8 +9,8 @@ from sqlalchemy import (
 
 from sqlalchemy.orm import (
     Mapped,
-    relationship,
     mapped_column,
+    relationship,
 )
 
 from typing import List
