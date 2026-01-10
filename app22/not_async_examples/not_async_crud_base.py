@@ -134,7 +134,7 @@ class NewCRUDBase(
             db.commit()
         return {"delete": len(list_delete)}
 
-    # convert class model DB (Base) -> to dict json *************************************
+    # convert class db_models DB (Base) -> to dict json *************************************
     # -----------------------------------------------------------------------------------
     def json_encoder(self, base_db: Base) -> dict:
         res: dict = jsonable_encoder(base_db)  # json_order: dict = order_db.json_encoder(order)

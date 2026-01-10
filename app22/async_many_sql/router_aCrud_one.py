@@ -16,7 +16,7 @@ from app22.async_many_sql.schema_many_sql import (
     ProductResp,
 )
 from app22.db_core.db_async import async_db
-from app22.db_core.model.model_new_many_db import Order, Product
+from app22.db_core.db_models.model_new_many_db import Order, Product
 
 logFC = ConfigLogger.get_logger("FileStdout")
 

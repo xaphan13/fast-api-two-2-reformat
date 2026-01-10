@@ -8,7 +8,7 @@ from app22.async_many_sql.schema_many_sql import (
     ProductUpdateBody,
 )
 
-from app22.db_core.model.model_new_many_db import (
+from app22.db_core.db_models.model_new_many_db import (
     Order,
     Product,
     OrderProductAssociation,

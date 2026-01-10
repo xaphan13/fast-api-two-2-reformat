@@ -10,8 +10,8 @@ from sqlalchemy.ext.asyncio import (
 from asyncio import current_task
 
 # """this is so that alembic can see the models and create tables"""
-from app22.db_core.model.model_new_ex_db import *
-from app22.db_core.model.model_new_many_db import *
+from app22.db_core.db_models.model_new_ex_db import *
+from app22.db_core.db_models.model_new_many_db import *
 from app22.db_core.base import Base
 
 from app22.core.config import DATABASE_URL_ASYNC

@@ -10,7 +10,7 @@ from sqlalchemy.engine import Result
 
 from app22.async_many_sql.schema_many_sql import OrderResp, OrderGetQuery, OrderUpdateBody
 from app22.db_core.db_async import async_db
-from app22.db_core.model.model_new_many_db import Order
+from app22.db_core.db_models.model_new_many_db import Order
 
 
 logFC = ConfigLogger.get_logger("FileStdout")

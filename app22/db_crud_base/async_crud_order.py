@@ -7,7 +7,7 @@ from app22.async_many_sql.schema_many_sql import (
     ProductGetQuery,
 )
 from app22.db_crud_base.async_crud_base import AsyncBaseCRUD, ReaderType
-from app22.db_core.model.model_new_many_db import Order, Product
+from app22.db_core.db_models.model_new_many_db import Order, Product
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete

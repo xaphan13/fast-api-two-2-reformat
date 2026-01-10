@@ -8,9 +8,9 @@ from app22.db_core.db_async import async_db
 from app22.async_join_tables.schema_join import CreateJoinPerson, GetJoinPerson, CreateJoinAddress, GetJoinAddress
 from app22.async_join_tables.schema_user_post import CreateUser, CreatePost, GetUser, RespPost, GetPost
 
-from app22.db_core.model.model_join import JoinPerson, JoinAddress
-from app22.db_core.model.model_admin import Admin_list, Admin_work
-from app22.db_core.model.model_new_ex_db import User, Post
+from app22.db_core.db_models.model_join import JoinPerson, JoinAddress
+from app22.db_core.db_models.model_admin import Admin_list, Admin_work
+from app22.db_core.db_models.model_new_ex_db import User, Post
 
 from app22.db_crud_base.async_join_address import addrDB
 from app22.db_crud_base.async_join_person import personDB

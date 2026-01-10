@@ -19,7 +19,7 @@ from app22.db_core.base import Base
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app22.db_core.model.model_reader_book import ListBook, Book
+    from app22.db_core.db_models.model_reader_book import ListBook, Book
 
 
 class ListBookAssociation(Base):

@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from app22.db_crud_base.async_crud_base import AsyncBaseCRUD, ReaderType, SqlType
 
-from app22.db_core.model.model_new_ex_db import User, Post
+from app22.db_core.db_models.model_new_ex_db import User, Post
 from app22.async_join_tables.schema_user_post import CreateUser, GetUser, CreatePost
 from sqlalchemy import Column
 from sqlalchemy.sql import select

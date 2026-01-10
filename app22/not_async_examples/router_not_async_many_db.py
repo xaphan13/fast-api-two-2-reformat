@@ -8,7 +8,7 @@ from app22.async_many_sql.schema_many_sql import (
     OrderGetAllOrderbyQuery,
 )
 
-from app22.db_core.model.model_new_many_db import Order
+from app22.db_core.db_models.model_new_many_db import Order
 
 from app22.not_async_examples.not_async_db_conf import SessionDB_not_async
 

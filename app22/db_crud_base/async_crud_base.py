@@ -200,7 +200,7 @@ class AsyncBaseCRUD(Generic[SqlType, CreateType, ReaderType, UpdateType, DeleteT
         return qty_delete
 
     # *******************************************************************
-    # ********** convert class model DB (Base) -> to dict json **********
+    # ********** convert class db_models DB (Base) -> to dict json **********
     def json_encoder(self, base_db: Base) -> dict:
         res: dict = jsonable_encoder(base_db)  # json_order: dict = order_db.json_encoder(order)
         return res  # print(f"res_update = {type(json_order)} - {json_order}")
