@@ -31,8 +31,3 @@ DB_NAME = os.environ.get("DB_NAME")
 DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 DATABASE_URL_ASYNC = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-
-
-# настройки для CELERY
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")

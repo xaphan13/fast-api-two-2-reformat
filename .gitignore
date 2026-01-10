@@ -26,8 +26,6 @@ log_app/
 log_celery/
 
 # Environment
-app11/local.env
-app22/local.env
 *.env
 .env
 
