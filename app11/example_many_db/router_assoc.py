@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app11.example_many_db.except_many_db import MyApiRouterMany
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from app11.db_core.db_conf import SessionDB
 
 from app11.example_many_db.model_many_db import Order, Product, OrderProductAssociation
@@ -19,9 +19,10 @@ from app11.example_many_db.schema_many_db import (
     OrderRespWithProductsDetails,
 )
 
+logFC = ConfigLogger.get_logger("FileStdout")
+
 
 ex_assoc_route = APIRouter(route_class=MyApiRouterMany, prefix="/ex_assoc", tags=["ex_assoc"])
-logFC = ConfigLogger.getLogger("FileStdout", "ex_assoc")
 
 
 # requesting list all Orders and Products from the database *****************************

@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Query, Path, Depends
 from typing_extensions import Annotated
 
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from app11.example_simple.schema_ex_simple import SimpleRespSchema, SimpleReqSchema, ModelName
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "ex_simple")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 ex_simple_route = APIRouter(prefix="/ex_simple", tags=["Example simple"])

@@ -1,4 +1,4 @@
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime
 import asyncio
@@ -11,7 +11,7 @@ from app11.run_task.model_task import TaskOne
 from app11.run_task.schema_task import TaskOneAdd
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "temp_task")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 @celery.task(name="req1_task")

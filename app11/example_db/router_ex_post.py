@@ -21,9 +21,9 @@ from app11.example_db.crud_db_users import dep_getUser_id, dep_getUser_name
 from app11.example_db.model_ex_db import Post, User
 
 
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 
-logFC = ConfigLogger.getLogger("FileStdout", "ex_simple")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 ex_post_route = APIRouter(route_class=MyApiRouter, prefix="/ex_post", tags=["ex_post"])

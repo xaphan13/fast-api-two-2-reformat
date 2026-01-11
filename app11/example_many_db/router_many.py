@@ -5,7 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session, selectinload, joinedload
 
 from app11.example_many_db.except_many_db import MyApiRouterMany
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from app11.db_core.db_conf import SessionDB
 
 from app11.example_many_db.model_many_db import Order, Product
@@ -26,9 +26,10 @@ from app11.example_many_db.schema_many_db import (
     TypeResponse,
 )
 
+logFC = ConfigLogger.get_logger("FileStdout")
+
 
 ex_many_route = APIRouter(route_class=MyApiRouterMany, prefix="/ex_many", tags=["ex_many"])
-logFC = ConfigLogger.getLogger("FileStdout", "ex_assoc")
 
 
 # ***************************************************************************************

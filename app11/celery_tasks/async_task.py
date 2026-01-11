@@ -1,4 +1,4 @@
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from celery import shared_task
 from datetime import datetime
 import time
@@ -6,7 +6,7 @@ import time
 from app11.celery_tasks.celery_worker import celery
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "tasks")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 @celery.task(name="create_task")

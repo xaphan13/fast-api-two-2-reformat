@@ -1,4 +1,4 @@
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 import asyncio
 from asyncio import Task
 from aiohttp import ClientSession
@@ -6,8 +6,8 @@ from pydantic import BaseModel
 from typing import Callable, Optional
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "ClientHTTPS")
-logF = ConfigLogger.getLogger("OnlyFile", "ClientHTTPS")
+logFC = ConfigLogger.get_logger("FileStdout")
+logF = ConfigLogger.get_logger("OnlyFile")
 
 
 class RespServer(BaseModel):

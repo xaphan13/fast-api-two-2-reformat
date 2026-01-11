@@ -1,4 +1,4 @@
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from fastapi import APIRouter, HTTPException, Depends
 from celery.result import AsyncResult
 from datetime import datetime
@@ -8,7 +8,7 @@ from app11.celery_tasks.temp_task import req1_task, sql_task
 from app11.run_task.schema_task import Req1BodyReq, TaskOneAdd, TaskOneQuery, Req1ParamsReq
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "temp_route")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 temp_route = APIRouter(prefix="/temp_route", tags=["Temp tasks"])

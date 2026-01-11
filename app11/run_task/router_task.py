@@ -1,4 +1,4 @@
-from app11.logger_core.config_logger import ConfigLogger
+from app11.config_log import ConfigLogger
 from fastapi import APIRouter, HTTPException, Depends, Query
 from starlette.responses import JSONResponse
 from celery import Celery
@@ -11,7 +11,7 @@ from app11.celery_tasks.celery_worker import depends_celery
 from app11.celery_tasks.async_task import create_task, create_shared_task
 
 
-logFC = ConfigLogger.getLogger("FileStdout", "tasks_route")
+logFC = ConfigLogger.get_logger("FileStdout")
 
 
 tasks_route = APIRouter(prefix="/tasks", tags=["Example tasks"])
