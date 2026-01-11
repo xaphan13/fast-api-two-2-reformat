@@ -32,6 +32,7 @@ target_metadata = Base.metadata
 from app22.core.config import DATABASE_URL
 
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
+# config.set_main_option("sqlalchemy.url", "sqlite:///./test.db")
 
 
 def run_migrations_offline() -> None:

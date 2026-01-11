@@ -4,14 +4,12 @@ from pathlib import Path
 import logging.config
 import os
 
-
-LOG_DIR: str = "./log"
-LOG_FILE: str = "example.log"
+from app22.core import config
 
 
 class ConfigLogger:
-    pathLoggerDir: str = LOG_DIR
-    nameFileLogger: str = LOG_FILE
+    pathDir_default: str = "./example_log_dir"
+    nameFile_default: str = "example.log"
     isSetting: bool = False  # для того чтобы settingLogger() вызвать один раз при запуске программы
 
     @staticmethod
@@ -22,7 +20,7 @@ class ConfigLogger:
             os.mkdir(path_dir)
 
     @staticmethod
-    def __settings_logger(log_dir: str = pathLoggerDir, log_file: str = nameFileLogger):
+    def __settings_logger(log_dir: str = pathDir_default, log_file: str = nameFile_default):
         """настройка логгера с использованием словаря"""
         ConfigLogger.__create_log_dir(log_dir=log_dir)
 
@@ -33,10 +31,10 @@ class ConfigLogger:
         ConfigLogger.isSetting = True
 
     @staticmethod
-    def setting_path_logger(log_dir: str = LOG_DIR, log_file: str = LOG_FILE):
+    def setting_path_logger(log_dir: str = pathDir_default, log_file: str = nameFile_default):
         """настройка имени файла логгера и директории"""
-        ConfigLogger.pathLoggerDir = log_dir
-        ConfigLogger.nameFileLogger = log_file
+        ConfigLogger.pathDir_default = log_dir
+        ConfigLogger.nameFile_default = log_file
         ConfigLogger.__settings_logger(log_dir, log_file)
 
     @staticmethod
@@ -127,7 +125,8 @@ def create_config_dict(log_dir: str, log_file: str) -> dict:
     return logging_config
 
 
-ConfigLogger.setting_path_logger(log_file="api_two_new.log")
+# ConfigLogger.setting_path_logger(log_dir="./log", log_file="api_two_new.log")
+ConfigLogger.setting_path_logger(log_dir=config.LOG_DIR, log_file=config.LOG_FILE)
 
 logF = ConfigLogger.get_logger("OnlyFile")
 logFC = ConfigLogger.get_logger("FileStdout")
