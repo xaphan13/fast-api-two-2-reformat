@@ -46,7 +46,11 @@ class User(Base):
 class Post(Base):
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(
+        Integer,
+        primary_key=True,
+        index=True,
+    )
 
     time_created: Mapped[time_stamp_utc]
 
@@ -62,7 +66,11 @@ class Post(Base):
         ),
         nullable=False,
     )
-    author = relationship("User", back_populates="posts")
+
+    author = relationship(
+        "User",
+        back_populates="posts",
+    )
 
     def __repr__(self):
         return (

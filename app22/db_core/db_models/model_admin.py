@@ -63,7 +63,11 @@ class Admin_work(Base):
     )
 
     admin_id: Mapped[int] = mapped_column(
-        ForeignKey("admin_list.admin_id", ondelete="CASCADE"),
+        Integer,
+        ForeignKey(
+            "admin_list.admin_id",
+            ondelete="CASCADE",
+        ),
     )
 
     admin_lists: Mapped["Admin_list"] = relationship(

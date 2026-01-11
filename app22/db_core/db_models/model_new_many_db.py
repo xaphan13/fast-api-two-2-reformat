@@ -27,7 +27,6 @@ class Order(Base):
     )
 
     created_at: Mapped[time_stamp_utc]
-
     promocode = Column(String(50))
 
     # association between Order -> Association
@@ -124,8 +123,3 @@ class OrderProductAssociation(Base):
         back_populates="orders_details",
         overlaps="orders, products",
     )
-
-    # Disable warning about delete operation
-    # __mapper_args__ = {
-    #     "confirm_deleted_rows": False
-    # }

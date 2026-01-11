@@ -25,7 +25,10 @@ class ListBookAssociation(Base):
     __tablename__ = "list_book_association"
     __table_args__ = (UniqueConstraint("list_id", "book_id", name="idx_unique_list_book"),)
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
     time_add: Mapped[time_stamp_utc]
 
@@ -66,7 +69,10 @@ class BookCategoryAssociation(Base):
     __tablename__ = "book_category_association"
     __table_args__ = (UniqueConstraint("category_id", "book_id", name="idx_unique_category_book"),)
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
     # association secondary between Association -> Book
     book_id = Column(

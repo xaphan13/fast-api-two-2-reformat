@@ -25,10 +25,21 @@ if TYPE_CHECKING:
 class Reader(Base):
     __tablename__ = "readers"
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
-    nickname = Column(String(30), nullable=False, unique=True)
-    user_id = Column(Integer(), default=0, nullable=False)
+    nickname = Column(
+        String(30),
+        nullable=False,
+        unique=True,
+    )
+    user_id = Column(
+        Integer(),
+        default=0,
+        nullable=False,
+    )
 
     # association between Reader -> ListBook = ForeignKey('readers.id',
     book_lists: Mapped[list["ListBook"]] = relationship(
@@ -51,19 +62,31 @@ class ListBook(Base):
     __tablename__ = "listbooks"
     __table_args__ = (UniqueConstraint("reader_id", "list_name", name="idx_unique_reader_list"),)
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
     time_created: Mapped[time_stamp_utc]
-
-    list_name = Column(String(30), nullable=False)
-    description = Column(String(200), nullable=False)
+    list_name = Column(
+        String(30),
+        nullable=False,
+    )
+    description = Column(
+        String(200),
+        nullable=False,
+    )
 
     # association ForeignKey between ListBook -> Reader
     reader_id = Column(
         Integer(),
-        ForeignKey("readers.id", ondelete="CASCADE"),
+        ForeignKey(
+            "readers.id",
+            ondelete="CASCADE",
+        ),
         nullable=False,
     )
+
     reader: Mapped["Reader"] = relationship(
         "Reader",
         back_populates="book_lists",
@@ -98,11 +121,23 @@ class ListBook(Base):
 class Book(Base):
     __tablename__ = "books"
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
-    title = Column(String(50), nullable=False)
-    description = Column(String(200), nullable=False)
-    author = Column(String(50), nullable=False)
+    title = Column(
+        String(50),
+        nullable=False,
+    )
+    description = Column(
+        String(200),
+        nullable=False,
+    )
+    author = Column(
+        String(50),
+        nullable=False,
+    )
 
     # association between Book -> Category = BookCategoryAssociation(ForeignKey('books.id',
     categories: Mapped[list["Category"]] = relationship(
@@ -140,10 +175,19 @@ class Book(Base):
 class Category(Base):
     __tablename__ = "categories"
 
-    id = Column(Integer(), primary_key=True)
+    id = Column(
+        Integer(),
+        primary_key=True,
+    )
 
-    genre = Column(String(30), nullable=False)
-    description = Column(String(200), nullable=False)
+    genre = Column(
+        String(30),
+        nullable=False,
+    )
+    description = Column(
+        String(200),
+        nullable=False,
+    )
 
     # association between Category -> Book = BookCategoryAssociation(ForeignKey('categories.id'),
     books: Mapped[list["Book"]] = relationship(

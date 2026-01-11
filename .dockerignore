@@ -36,10 +36,8 @@ venv/
 .venv/
 .ruff_cache/
 
-compose-flower.yml.yml
-compose-nginx-pack.yml
+*.yml
 .dockerignore
-
 docker-compose.yml
 Dockerfile
 
