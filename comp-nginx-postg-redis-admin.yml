@@ -43,6 +43,18 @@ services:
             - "7079:6379"
 
 #----------------------------------------------------------------------------------
+    flower_redis_first:
+        container_name: flower_new_first
+        image: mher/flower:0.9.7
+        command: ['flower', '--url_prefix=flower_first']
+        networks:
+            my_network:
+                ipv4_address: 172.20.0.41
+        environment:
+            - CELERY_BROKER_URL=redis://redis_new:6379/0
+            - FLOWER_PORT=5801
+
+#----------------------------------------------------------------------------------
     nginx:
         container_name: nginx_new
         build:
