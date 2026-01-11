@@ -16,7 +16,7 @@ from app22.db_crud_base.async_join_address import addrDB
 from app22.db_crud_base.async_join_person import personDB
 from app22.db_crud_base.async_post import postDB
 from app22.db_crud_base.async_user import userDB
-from app22.http_request_routers.data_join import data_addr, data_pers
+from app22.async_join_tables.data_join import data_addr, data_pers
 
 
 logFC = ConfigLogger.get_logger("FileStdout")
@@ -26,7 +26,7 @@ join_one_r = APIRouter(prefix="/join_one_r", tags=["NEW join_one_r"])
 
 
 # ==============================================================================
-# +++++++++++++++++++ JoinPerson - select - JoinAddress ++++++++++++++++++++++++
+# +++++++++++++++++++++++++++ User - select - Post +++++++++++++++++++++++++++++
 # ------------------------------------------------------------------------------
 @join_one_r.get("/add_user_post", response_model=RespPost | int)
 async def add_user_post(action: int = 3, db: AsyncSession = Depends(async_db.get_db)):
@@ -90,9 +90,7 @@ async def get_person(db: AsyncSession = Depends(async_db.get_db)):
     return {}
 
 
-# ==============================================================================
-# +++++++++++++++++ create_person_addr delete_person_addr ++++++++++++++++++++++
-# ------------------------------------------------------------------------------
+# ******************* create_person_addr delete_person_addr *******************
 @join_one_r.post("/create_person_addr", response_model=dict)
 async def create_person_addr(db: AsyncSession = Depends(async_db.get_db)):
     await personDB.delete_record_many(GetJoinPerson(), db)
@@ -126,9 +124,6 @@ async def delete_person_addr(
     qty_pers = await personDB.delete_record_many(params_pers, db)
     qty_addr = await addrDB.delete_record_many(params_addr, db)
     return {"DeleteJoinAddress": qty_addr, "DeleteJoinPerson": qty_pers}
-
-
-# ______________________________________________________________________________
 
 
 # ==============================================================================
