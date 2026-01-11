@@ -22,7 +22,7 @@ from app22.async_reader_project.schema_relationship import (
 
 from app22.async_reader_project.model_reader_book import Reader, ListBook, Book
 
-from app22.db_crud_base.async_reader import readerDB
+from app22.async_reader_project.async_crud_reader import readerDB
 
 from app22.core.config import FILES_DIR
 

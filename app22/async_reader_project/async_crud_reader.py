@@ -1,5 +1,7 @@
-from app22.db_crud_base.async_crud_base import AsyncBaseCRUD, SqlType, ReaderType, CreateType
-from app22.async_reader_project.model_reader_book import Reader, ListBook, Book, Category
+from sqlalchemy.sql import select
+from sqlalchemy.orm import selectinload
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app22.async_reader_project.schema_reader import (
     CreateReader,
     SchemaReader,
@@ -11,9 +13,19 @@ from app22.async_reader_project.schema_reader import (
     CreateCategory,
 )
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
-from sqlalchemy.sql import select
+from app22.async_reader_project.model_reader_book import (
+    Reader,
+    ListBook,
+    Book,
+    Category,
+)
+
+from app22.db_core.async_crud_base import (
+    AsyncBaseCRUD,
+    SqlType,
+    ReaderType,
+    CreateType,
+)
 
 
 # ==============================================================================

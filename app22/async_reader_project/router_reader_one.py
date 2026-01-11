@@ -12,8 +12,8 @@ from app22.async_reader_project.schema_relationship import *
 
 from app22.async_reader_project.model_reader_book import ListBook
 
-from app22.db_crud_base.async_crud_base import AddResult
-from app22.db_crud_base.async_reader import readerDB, listbookDB, bookDB, categoryDB
+from app22.db_core.async_crud_base import AddResult
+from app22.async_reader_project.async_crud_reader import readerDB, listbookDB, bookDB, categoryDB
 
 from app22.config_log import ConfigLogger
 

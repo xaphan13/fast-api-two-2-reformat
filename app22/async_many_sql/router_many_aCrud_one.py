@@ -18,7 +18,7 @@ from app22.async_many_sql.schema_many_sql import (
 
 from app22.async_many_sql.model_new_many_db import Order, Product
 
-from app22.db_crud_base.async_crud_order import order_async, product_async
+from app22.async_many_sql.async_crud_order import order_async, product_async
 
 from app22.config_log import ConfigLogger
 

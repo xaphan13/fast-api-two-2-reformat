@@ -1,8 +1,20 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from app22.db_crud_base.async_crud_base import AsyncBaseCRUD, CreateType, SqlType
 
-from app22.async_join_tables.model_new_ex_db import Post, User
-from app22.async_join_tables.schema_user_post import CreatePost, GetPost
+from app22.async_join_tables.schema_user_post import (
+    CreatePost,
+    GetPost,
+)
+
+from app22.async_join_tables.model_new_ex_db import (
+    Post,
+    User,
+)
+
+from app22.db_core.async_crud_base import (
+    AsyncBaseCRUD,
+    CreateType,
+    SqlType,
+)
 
 
 class PostAsyncCRUD(AsyncBaseCRUD[Post, CreatePost, GetPost, GetPost, GetPost]):

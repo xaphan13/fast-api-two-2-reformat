@@ -1,6 +1,11 @@
-from app22.db_crud_base.async_crud_base import AsyncBaseCRUD
+from app22.async_join_tables.schema_join import (
+    CreateJoinPerson,
+    GetJoinPerson,
+)
+
 from app22.async_join_tables.model_join import JoinPerson
-from app22.async_join_tables.schema_join import CreateJoinPerson, GetJoinPerson
+
+from app22.db_core.async_crud_base import AsyncBaseCRUD
 
 
 class AsyncJoinPersonCRUD(AsyncBaseCRUD[JoinPerson, CreateJoinPerson, GetJoinPerson, CreateJoinPerson, GetJoinPerson]):

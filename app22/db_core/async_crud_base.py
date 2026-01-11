@@ -1,24 +1,22 @@
-from pydantic import BaseModel
-from typing import Generic, TypeVar, Type
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import selectinload, joinedload
-from sqlalchemy.sql import select, update, delete
 from sqlalchemy import Column, Executable
-from typing import Sequence
+
+from sqlalchemy.sql import select, update, delete
+from sqlalchemy.orm import selectinload, joinedload
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from typing import Generic, TypeVar, Type, Sequence
+from pydantic import BaseModel
 
 from app22.db_core.db_async import Base
+
 
 SqlType = TypeVar("SqlType", bound=Base)
 CreateType = TypeVar("CreateType", bound=BaseModel)
 ReaderType = TypeVar("ReaderType", bound=BaseModel)
 UpdateType = TypeVar("UpdateType", bound=BaseModel)
 DeleteType = TypeVar("DeleteType", bound=BaseModel)
-
-# from app22.config_logger import ConfigLogger
-
-# logFC = ConfigLogger.getLogger("FileStdout", "AsyncBaseCRUD")
 
 
 class AddResult:

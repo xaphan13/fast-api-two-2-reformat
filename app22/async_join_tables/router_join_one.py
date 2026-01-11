@@ -23,10 +23,10 @@ from app22.async_join_tables.model_join import JoinPerson, JoinAddress
 from app22.async_join_tables.model_admin import Admin_list, Admin_work
 from app22.async_join_tables.model_new_ex_db import User, Post
 
-from app22.db_crud_base.async_join_address import addrDB
-from app22.db_crud_base.async_join_person import personDB
-from app22.db_crud_base.async_post import postDB
-from app22.db_crud_base.async_user import userDB
+from app22.async_join_tables.async_crud_join_address import addrDB
+from app22.async_join_tables.async_crud_join_person import personDB
+from app22.async_join_tables.async_crud_post import postDB
+from app22.async_join_tables.async_crud_user import userDB
 
 from app22.async_join_tables.data_join import data_addr, data_pers
 
