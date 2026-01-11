@@ -1,7 +1,9 @@
-from typing import Optional, List
 from pydantic import BaseModel
-from enum import Enum
+
+from typing import Optional, List
+
 from datetime import datetime
+from enum import Enum
 
 
 # ==============================================================================
@@ -22,11 +24,11 @@ class CreateJoinPerson(BaseModel):
 
 
 class OrderbyJoinPersonEnum(str, Enum):
-    id: str = "id"
-    time_created: str = "time_created"
-    name: str = "name"
-    surname: str = "surname"
-    link_addr: int = "link_addr"
+    id = "id"
+    time_created = "time_created"
+    name = "name"
+    surname = "surname"
+    link_addr = "link_addr"
 
 
 class OrderbyJoinPersonList(BaseModel):
@@ -59,11 +61,11 @@ class CreateJoinAddress(BaseModel):
 
 
 class OrderbyJoinAddressEnum(str, Enum):
-    id: str = "id"
-    time_created: str = "time_created"
-    city: str = "city"
-    street: str = "street"
-    addr_index: int = "addr_index"
+    id = "id"
+    time_created = "time_created"
+    city = "city"
+    street = "street"
+    addr_index = "addr_index"
 
 
 class OrderbyJoinAddressList(BaseModel):

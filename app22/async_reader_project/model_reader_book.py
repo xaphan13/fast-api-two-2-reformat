@@ -14,12 +14,12 @@ from sqlalchemy.orm import (
 )
 
 from app22.db_core.base import Base
-from app22.db_core.db_models.type_for_models import time_stamp_utc
+from app22.db_core.type_for_models import time_stamp_utc
 
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app22.db_core.db_models.model_reader_assoc import ListBookAssociation
+    from app22.async_reader_project.model_reader_assoc import ListBookAssociation
 
 
 class Reader(Base):

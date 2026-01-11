@@ -1,17 +1,30 @@
-import os
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.responses import FileResponse
+from sqlalchemy import Row, func, desc, Result, Subquery, CTE
 from sqlalchemy.sql import select
 from sqlalchemy.orm import joinedload, aliased
-from sqlalchemy import Row, func, desc, Result, Subquery, CTE
-from typing import Tuple, Sequence, Any
-from fastapi.responses import FileResponse
+from typing import Tuple, Sequence, Any, List
+import os
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from app22.db_core.db_async import async_db
+
+from app22.async_reader_project.schema_reader import (
+    SchemaReader,
+    SchemaListBook,
+    SchemaBook,
+)
+from app22.async_reader_project.schema_relationship import (
+    QtyBookReader,
+    DownloadFileReq,
+    UploadFileReq,
+)
+
+from app22.async_reader_project.model_reader_book import Reader, ListBook, Book
+
+from app22.db_crud_base.async_reader import readerDB
 
 from app22.core.config import FILES_DIR
-from app22.db_core.db_async import async_db
-from app22.db_crud_base.async_reader import readerDB
-from app22.db_core.db_models.model_reader_book import ListBook
-from app22.async_reader_project.schema_relationship import *
 
 
 from app22.config_log import ConfigLogger
@@ -92,11 +105,11 @@ async def get_join_distinct(params: SchemaReader = Depends(), db: AsyncSession =
 # ********* get one Order to the database ****************************************
 @reader_aCrud_two.get("/get_unique_joinedload", response_model=List[SchemaReader])
 async def get_unique_joinedload(params: SchemaReader = Depends(), db: AsyncSession = Depends(async_db.get_db)):
-    where_attr: list = readerDB.get_filter_attr(params)
+    where_attr: list[bool | Any] = readerDB.get_filter_attr(params)
     query = select(Reader).where(where_attr)
     query = query.options(joinedload(ListBook.books))
     result = await db.execute(query)
-    records: list = result.unique().scalars().all()
+    records: Sequence[Any] = result.unique().scalars().all()
     for rec in records:
         logFC.info(f"{rec}")
     return records
@@ -122,7 +135,7 @@ async def get_having_cte(params: SchemaListBook = Depends(), db: AsyncSession = 
     # query = query.order_by(desc("count"))
 
     result: Result[tuple[Reader, Book, Any]] = await db.execute(query)
-    records: list = result.all()
+    records: Sequence[Row[tuple[Reader, Book, Any]]] = result.all()
     for rec in records:
         logFC.info(f"{rec}")
     return records
@@ -181,7 +194,8 @@ async def upload_file(file: UploadFile = File(...), file_info: UploadFileReq = D
     dirF: str = FILES_DIR if file_info.dir_name is None else f"app22/{file_info.dir_name}"
     fileN: str = file.filename if file_info.file_name is None else file_info.file_name
 
-    if os.path.exists(f"{dirF}/{fileN}") is True:
+    # if os.path.exists(f"{dirF}/{fileN}") is True:
+    if os.path.exists(f"{dirF}/{fileN}"):
         raise HTTPException(status_code=404, detail="File already exists")
 
     with open(f"{dirF}/{fileN}", "wb") as buffer:
@@ -195,7 +209,8 @@ async def upload_file(file: UploadFile = File(...), file_info: UploadFileReq = D
 async def download_file(file: DownloadFileReq = Depends()):
     dirF: str = FILES_DIR if file.dir_name is None else f"app22/{file.dir_name}"
 
-    if os.path.exists(f"{dirF}/{file.file_name}") is False:
+    # if os.path.exists(f"{dirF}/{file.file_name}") is False:
+    if not os.path.exists(f"{dirF}/{file.file_name}"):
         raise HTTPException(status_code=404, detail="File not found")
 
     return FileResponse(path=f"{dirF}/{file.file_name}", filename=file.file_name, media_type="application/octet-stream")

@@ -1,5 +1,7 @@
-from typing import Optional, List
 from pydantic import BaseModel
+
+from typing import Optional, List
+
 from datetime import datetime
 from enum import Enum
 
@@ -20,10 +22,10 @@ class CreateListBookAssociation(BaseModel):
 
 
 class ListBookAssociationEnum(str, Enum):
-    id: str = "id"
-    time_add: str = "time_add"
-    list_id: str = "list_id"
-    book_id: str = "book_id"
+    id = "id"
+    time_add = "time_add"
+    list_id = "list_id"
+    book_id = "book_id"
 
 
 class OrderbyListBookAssociation(BaseModel):
@@ -45,9 +47,9 @@ class CreateBookCategoryAssociation(BaseModel):
 
 
 class BookCategoryAssociationEnum(str, Enum):
-    id: str = "id"
-    book_id: str = "book_id"
-    category_id: str = "category_id"
+    id = "id"
+    book_id = "book_id"
+    category_id = "category_id"
 
 
 class OrderbyBookCategoryAssociation(BaseModel):

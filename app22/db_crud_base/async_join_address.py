@@ -1,5 +1,5 @@
 from app22.db_crud_base.async_crud_base import AsyncBaseCRUD
-from app22.db_core.db_models.model_join import JoinAddress
+from app22.async_join_tables.model_join import JoinAddress
 from app22.async_join_tables.schema_join import CreateJoinAddress, GetJoinAddress
 
 

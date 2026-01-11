@@ -1,7 +1,9 @@
-from typing import Optional, List
 from pydantic import BaseModel
-from enum import Enum
+
+from typing import Optional, List
+
 from datetime import datetime
+from enum import Enum
 
 
 # ***************************************************************************************
@@ -23,9 +25,9 @@ class OrderUpdateBody(BaseModel):
 
 
 class OrderGetAllOrderbyQuery(str, Enum):
-    id: str = "id"
-    time: str = "time"
-    promocode: str = "promocode"
+    id = "id"
+    time = "time"
+    promocode = "promocode"
 
 
 class OrderGetOrderbyList(BaseModel):

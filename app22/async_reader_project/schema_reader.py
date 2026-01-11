@@ -1,5 +1,7 @@
-from typing import Optional, List, Self
 from pydantic import BaseModel
+
+from typing import Optional, List, Self
+
 from datetime import datetime
 from enum import Enum
 
@@ -22,9 +24,9 @@ class CreateReader(BaseModel):
 
 
 class ReaderEnum(str, Enum):
-    id: str = "id"
-    nickname: str = "nickname"
-    user_id: str = "user_id"
+    id = "id"
+    nickname = "nickname"
+    user_id = "user_id"
 
 
 class OrderbyReader(BaseModel):
@@ -53,10 +55,10 @@ class CreateListBook(BaseModel):
 
 
 class ListBookEnum(str, Enum):
-    id: str = "id"
-    time_created: str = "time_created"
-    list_name: str = "list_name"
-    description: str = "description"
+    id = "id"
+    time_created = "time_created"
+    list_name = "list_name"
+    description = "description"
 
 
 class OrderbyListBook(BaseModel):
@@ -83,10 +85,10 @@ class CreateBook(BaseModel):
 
 
 class BookEnum(str, Enum):
-    id: str = "id"
-    title: str = "title"
-    description: str = "description"
-    author: str = "author"
+    id = "id"
+    title = "title"
+    description = "description"
+    author = "author"
 
 
 class ListOrderbyBook(BaseModel):
@@ -112,9 +114,9 @@ class CreateCategory(BaseModel):
 
 
 class CategoryEnum(str, Enum):
-    id: str = "id"
-    genre: str = "genre"
-    description: str = "description"
+    id = "id"
+    genre = "genre"
+    description = "description"
 
 
 class OrderbyCategory(BaseModel):

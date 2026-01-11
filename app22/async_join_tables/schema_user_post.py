@@ -1,5 +1,7 @@
-from typing import Optional, List
 from pydantic import BaseModel
+
+from typing import Optional, List
+
 from datetime import datetime
 from enum import Enum
 
@@ -25,11 +27,11 @@ class CreateUser(BaseModel):
 
 
 class OrderbyUserEnum(str, Enum):
-    id: str = "id"
-    nickname: str = "nickname"
-    email: str = "email"
-    firstname: str = "firstname"
-    surname: str = "surname"
+    id = "id"
+    nickname = "nickname"
+    email = "email"
+    firstname = "firstname"
+    surname = "surname"
 
 
 class OrderbyUserList(BaseModel):
@@ -63,11 +65,11 @@ class CreatePost(BaseModel):
 
 
 class OrderbyPostEnum(str, Enum):
-    id: str = "id"
-    time_created: str = "time_created"
-    title: str = "title"
-    content: str = "content"
-    user_id: str = "user_id"
+    id = "id"
+    time_created = "time_created"
+    title = "title"
+    content = "content"
+    user_id = "user_id"
 
 
 class OrderbyPostList(BaseModel):

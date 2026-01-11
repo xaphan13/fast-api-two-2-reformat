@@ -1,23 +1,36 @@
-from app22.config_log import ConfigLogger
 from fastapi import APIRouter, Depends
 from sqlalchemy.sql import select
 from sqlalchemy.orm import selectinload
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from app22.db_core.db_async import async_db
 
-from app22.async_join_tables.schema_join import CreateJoinPerson, GetJoinPerson, CreateJoinAddress, GetJoinAddress
-from app22.async_join_tables.schema_user_post import CreateUser, CreatePost, GetUser, RespPost, GetPost
+from app22.async_join_tables.schema_join import (
+    CreateJoinPerson,
+    GetJoinPerson,
+    CreateJoinAddress,
+    GetJoinAddress,
+)
+from app22.async_join_tables.schema_user_post import (
+    CreateUser,
+    CreatePost,
+    GetUser,
+    RespPost,
+    GetPost,
+)
 
-from app22.db_core.db_models.model_join import JoinPerson, JoinAddress
-from app22.db_core.db_models.model_admin import Admin_list, Admin_work
-from app22.db_core.db_models.model_new_ex_db import User, Post
+from app22.async_join_tables.model_join import JoinPerson, JoinAddress
+from app22.async_join_tables.model_admin import Admin_list, Admin_work
+from app22.async_join_tables.model_new_ex_db import User, Post
 
 from app22.db_crud_base.async_join_address import addrDB
 from app22.db_crud_base.async_join_person import personDB
 from app22.db_crud_base.async_post import postDB
 from app22.db_crud_base.async_user import userDB
+
 from app22.async_join_tables.data_join import data_addr, data_pers
 
+from app22.config_log import ConfigLogger
 
 logFC = ConfigLogger.get_logger("FileStdout")
 

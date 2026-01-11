@@ -11,7 +11,7 @@ from sqlalchemy.orm import (
 )
 
 from app22.db_core.base import Base
-from app22.db_core.db_models.type_for_models import time_stamp_utc
+from app22.db_core.type_for_models import time_stamp_utc
 
 
 class JoinPerson(Base):

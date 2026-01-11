@@ -1,9 +1,17 @@
-from enum import Enum
-from typing import Optional, List, Self
 from pydantic import BaseModel, Field
 
-from app22.db_core.db_models.model_reader_book import Reader, Book
-from app22.async_reader_project.schema_reader import SchemaListBook, SchemaReader, SchemaCategory, SchemaBook
+from typing import Optional, List, Self
+
+from enum import Enum
+
+from app22.async_reader_project.schema_reader import (
+    SchemaListBook,
+    SchemaReader,
+    SchemaCategory,
+    SchemaBook,
+)
+
+from app22.async_reader_project.model_reader_book import Reader, Book
 
 
 # ==============================================================================
@@ -47,10 +55,10 @@ class ListBookAddBooks(BaseModel):
 # ++++++++++++++++++ SchemaDeleteId - all tables READER-PRO ++++++++++++++++++++
 # ------------------------------------------------------------------------------
 class DeleteEnum(str, Enum):
-    reader: str = "reader"
-    list: str = "list"
-    book: str = "book"
-    category: str = "category"
+    reader = "reader"
+    list = "list"
+    book = "book"
+    category = "category"
 
 
 class SchemaDeleteId(BaseModel):
@@ -102,10 +110,10 @@ class SchemaBookWithCategoryLists(SchemaBook):
 
 
 class GetBookRelEnum(str, Enum):
-    lists: str = "lists"
-    categories: str = "categories"
-    all: str = "all"
-    one: str = "one"
+    lists = "lists"
+    categories = "categories"
+    all = "all"
+    one = "one"
 
 
 class SchemaGetBookRel(BaseModel):

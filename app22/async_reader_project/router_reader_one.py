@@ -1,24 +1,27 @@
-from app22.config_log import ConfigLogger
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
-from sqlalchemy.sql import select
 from sqlalchemy import and_, Row
+from sqlalchemy.sql import select
+from sqlalchemy.orm import selectinload
 from typing import Tuple, Sequence
 
-from app22.async_reader_project.schema_reader import *
+from sqlalchemy.ext.asyncio import AsyncSession
 from app22.db_core.db_async import async_db
+
+from app22.async_reader_project.schema_reader import *
+from app22.async_reader_project.schema_relationship import *
+
+from app22.async_reader_project.model_reader_book import ListBook
+
 from app22.db_crud_base.async_crud_base import AddResult
 from app22.db_crud_base.async_reader import readerDB, listbookDB, bookDB, categoryDB
-from app22.db_core.db_models.model_reader_book import ListBook
-from app22.async_reader_project.schema_relationship import *
+
+from app22.config_log import ConfigLogger
 
 
 logFC = ConfigLogger.get_logger("FileStdout")
 
 
 reader_aCrud_one = APIRouter(prefix="/reader_aCrud_one", tags=["NEW reader_aCrud_one"])
-# app.include_router(reader_aCrud_one)
 
 
 # ================================================================================

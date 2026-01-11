@@ -1,9 +1,8 @@
-from app22.db_crud_base.async_crud_order import order_async, product_async
-from app22.config_log import ConfigLogger
-
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import Column
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from app22.db_core.db_async import async_db
 
 from app22.async_many_sql.schema_many_sql import (
     OrderCreateBody,
@@ -15,8 +14,13 @@ from app22.async_many_sql.schema_many_sql import (
     ProductGetQuery,
     ProductResp,
 )
-from app22.db_core.db_async import async_db
-from app22.db_core.db_models.model_new_many_db import Order, Product
+
+
+from app22.async_many_sql.model_new_many_db import Order, Product
+
+from app22.db_crud_base.async_crud_order import order_async, product_async
+
+from app22.config_log import ConfigLogger
 
 logFC = ConfigLogger.get_logger("FileStdout")
 
