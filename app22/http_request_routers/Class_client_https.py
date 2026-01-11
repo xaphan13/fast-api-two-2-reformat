@@ -1,7 +1,10 @@
 import asyncio
 from asyncio import Task
+
 from aiohttp import ClientSession
+
 from pydantic import BaseModel
+
 from typing import Callable, Optional
 
 
@@ -144,48 +147,3 @@ class ClientHTTPS:
         )
 
         return resp
-
-
-# ********************************************************************************************
-
-
-api_weather: ClientHTTPS = ClientHTTPS("api.openweathermap.org", True)
-
-
-# ********************************************************************************************
-# template call - send request
-# --------------------------------------------------------------------------------------------
-# ********************************************************* asyncio.create_task openweathermap
-def weather_response_call(task: Task[RespServer]):
-    result: RespServer = task.result()
-
-
-async def main_weather_create_task(city: str, appid: str) -> RespServer:
-    path = "/data/2.5/weather"
-    params = {"q": city, "APPID": appid}
-    task1: Task[RespServer] = api_weather.get_req_create(
-        path,
-        params=params,
-        callback=weather_response_call,
-    )
-    result: RespServer = await task1
-
-    return result
-
-
-# ********************************************************* asyncio.create_task openweathermap
-
-
-# ********************************************************* await openweathermap
-async def main_weather_await(city: str, appid: str) -> RespServer:
-    path = "/data/2.5/weather"
-    params = {"q": city, "APPID": appid}
-    result: RespServer = await api_weather.get_req_await(
-        path,
-        params=params,
-    )
-
-    return result
-
-
-# ********************************************************* await openweathermap

@@ -50,7 +50,7 @@ class SessionDB_not_async:
         )
 
     @staticmethod
-    def get_db_alembic():
+    def get_db_not_async():
         """Dependency for getting session"""
         db = SessionDB_not_async.sessionLocal()
         try:

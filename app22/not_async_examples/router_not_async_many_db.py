@@ -15,20 +15,27 @@ from app22.not_async_examples.not_async_db_conf import SessionDB_not_async
 from app22.not_async_examples.not_async_crud_many import order_crud
 
 
-not_async_many_crud = APIRouter(prefix="/new_many_crud", tags=["NEW new_many_crud"])
+not_async_order_crud = APIRouter(
+    prefix="/not_async_crud",
+    tags=["not_async order_crud - Order: add_record & get_record_all"],
+)
 
 
 # adding Order to the database **********************************************************
-@not_async_many_crud.post("/add_order_crud", response_model=OrderResp)
-async def add_order_crud(body: OrderCreateBody, db: Session = Depends(SessionDB_not_async.get_db_alembic)):
+@not_async_order_crud.post("/add_order_crud", response_model=OrderResp)
+async def add_order_crud(
+    body: OrderCreateBody,
+    db: Session = Depends(SessionDB_not_async.get_db_not_async),
+):
     new_order: Order = order_crud.add_record(body, db)
     return new_order
 
 
 # adding Order to the database **********************************************************
-@not_async_many_crud.get("/get_all_orders_crud", response_model=list[OrderResp])
+@not_async_order_crud.get("/get_all_orders_crud", response_model=list[OrderResp])
 async def get_all_orders_crud(
-    params: OrderGetAllOrderbyQuery, db: Session = Depends(SessionDB_not_async.get_db_alembic)
+    params: OrderGetAllOrderbyQuery,
+    db: Session = Depends(SessionDB_not_async.get_db_not_async),
 ):
     if params == "time":
         order_by_list_o: list[Column[Order]] = [Order.created_at, Order.id]
