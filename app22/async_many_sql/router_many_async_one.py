@@ -30,7 +30,6 @@ new_many_async_one = APIRouter(prefix="/new_many_async_one", tags=["NEW new_many
 # ================================================================================
 # +++++++++++++++++++++++++ added record +++++++++++++++++++++++++
 # ================================================================================
-# adding Order to the database *****************************************
 @new_many_async_one.post("/add_order", response_model=OrderResp)
 async def add_order(body: OrderCreateBody, db: AsyncSession = Depends(async_db.get_db)):
     new_order: Order = Order(**body.model_dump())
@@ -43,7 +42,6 @@ async def add_order(body: OrderCreateBody, db: AsyncSession = Depends(async_db.g
     return new_order
 
 
-# adding Order to the database *****************************************
 @new_many_async_one.post("/insert_order", response_model=OrderCreateBody)
 async def insert_order(body: OrderCreateBody, db: AsyncSession = Depends(async_db.get_db)):
     stmt: Insert[Order] = insert(Order).values(**body.model_dump())
@@ -56,13 +54,8 @@ async def insert_order(body: OrderCreateBody, db: AsyncSession = Depends(async_d
 
 
 # ================================================================================
-# ================================================================================
-
-
-# ================================================================================
 # +++++++++++++++++++++++++ get record - condition  +++++++++++++++++++++++++
 # ================================================================================
-# get Order to the database *****************************************
 @new_many_async_one.get("/get_order_filter_by", response_model=OrderResp)
 async def get_order_filter_by(params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     # stmt: Select[tuple[Order]] = select(Order).filter_by(id=22)
@@ -81,7 +74,6 @@ async def get_order_filter_by(params: OrderGetQuery = Depends(), db: AsyncSessio
     raise HTTPException(status_code=422, detail=f"select.filter_by with {filter_where} not found")
 
 
-# get Order to the database *****************************************
 @new_many_async_one.get("/get_order_where", response_model=OrderResp | list[OrderResp])
 async def get_order_where(params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     # stmt = select(Order).where(Order.id == 22)
@@ -106,10 +98,6 @@ async def get_order_where(params: OrderGetQuery = Depends(), db: AsyncSession = 
 
 
 # ================================================================================
-# ================================================================================
-
-
-# ================================================================================
 # +++++++++++++++++++++++++ get all - order_by +++++++++++++++++++++++++
 # ================================================================================
 # get all Order to the database **********************************************************
@@ -121,7 +109,6 @@ async def get_all_orders(params: OrderGetAllOrderbyQuery, db: AsyncSession = Dep
         order_by_list_o: list[Column[Order]] = [Order.promocode, Order.created_at]
     else:
         order_by_list_o: list[Column[Order]] = [Order.id, Order.created_at]
-    # =====================================================================
 
     stmt: Select[tuple[Order]] = select(Order).order_by(*order_by_list_o)
 
@@ -132,13 +119,8 @@ async def get_all_orders(params: OrderGetAllOrderbyQuery, db: AsyncSession = Dep
 
 
 # ================================================================================
-# ================================================================================
-
-
-# ================================================================================
 # +++++++++++++++++++++++++ test +++++++++++++++++++++++++
 # ================================================================================
-# test Order to the database **********************************************************
 @new_many_async_one.get("/get_all_test", response_model=list[ProductResp | OrderResp])
 async def get_all_orders(variant: int = 1, db: AsyncSession = Depends(async_db.get_db)):
     stmt: Select[tuple[Order]] = (
@@ -169,7 +151,3 @@ async def get_all_orders(variant: int = 1, db: AsyncSession = Depends(async_db.g
     [logFC.info(f"POST/all : prods1 = {prod}") for prod in prods1]
 
     return [order0] + prods0 + [order1] + prods1
-
-
-# ================================================================================
-# ================================================================================

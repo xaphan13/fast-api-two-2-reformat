@@ -25,7 +25,6 @@ new_many_async_two = APIRouter(prefix="/new_many_async_two", tags=["NEW new_many
 # ================================================================================
 # +++++++++++++++++++++++++ deleting record +++++++++++++++++++++++++
 # ================================================================================
-# deleting Order to the database *****************************************
 @new_many_async_two.delete("/delete_order", response_model=OrderResp)
 async def delete_order(params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     filter_delete = {key: value for key, value in params.model_dump(exclude_none=True).items()}
@@ -41,7 +40,6 @@ async def delete_order(params: OrderGetQuery = Depends(), db: AsyncSession = Dep
     raise HTTPException(status_code=422, detail=f"delete.filter_by with {filter_delete} not found")
 
 
-# deleting Order to the database *****************************************
 @new_many_async_two.delete("/delete_list_order", response_model=dict)
 async def delete_list_order(params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)):
     # filter_filter_by = {key: value for key, value in params.model_dump(exclude_none=True).items()}
@@ -59,13 +57,8 @@ async def delete_list_order(params: OrderGetQuery = Depends(), db: AsyncSession 
 
 
 # ================================================================================
-# ================================================================================
-
-
-# ================================================================================
 # +++++++++++++++++++++++++ update record - condition  +++++++++++++++++++++++++
 # ================================================================================
-# updating Order to the database *****************************************
 @new_many_async_two.put("/update_order", response_model=OrderResp)
 async def update_order(
     body: OrderUpdateBody, params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)
@@ -84,7 +77,6 @@ async def update_order(
     raise HTTPException(status_code=422, detail=f"update.filter_by with {filter_update} not found")
 
 
-# updating Order to the database *****************************************
 @new_many_async_two.put("/update_list_order", response_model=dict)
 async def update_list_order(
     body: OrderUpdateBody, params: OrderGetQuery = Depends(), db: AsyncSession = Depends(async_db.get_db)
@@ -101,7 +93,3 @@ async def update_list_order(
     rowcount = result.rowcount
     logFC.info(f"UPDATE/update_list_order : {rowcount}- {type(stmt)} - {type(result)}")
     return {"UPDATE": rowcount}
-
-
-# ================================================================================
-# ================================================================================
