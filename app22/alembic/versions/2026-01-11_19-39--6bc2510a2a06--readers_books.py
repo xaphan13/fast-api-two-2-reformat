@@ -54,13 +54,9 @@ def upgrade() -> None:
             server_default=sa.text("(CURRENT_TIMESTAMP)"),
             nullable=False,
         ),
-        sa.ForeignKeyConstraint(
-            ["reader_id"], ["readers.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["reader_id"], ["readers.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint(
-            "reader_id", "list_name", name="idx_unique_reader_list"
-        ),
+        sa.UniqueConstraint("reader_id", "list_name", name="idx_unique_reader_list"),
     )
     # ### end Alembic commands ###
 

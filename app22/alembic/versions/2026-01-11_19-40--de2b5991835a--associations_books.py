@@ -25,13 +25,9 @@ def upgrade() -> None:
         sa.Column("book_id", sa.Integer(), nullable=False),
         sa.Column("category_id", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(["book_id"], ["books.id"], ondelete="CASCADE"),
-        sa.ForeignKeyConstraint(
-            ["category_id"], ["categories.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["category_id"], ["categories.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint(
-            "category_id", "book_id", name="idx_unique_category_book"
-        ),
+        sa.UniqueConstraint("category_id", "book_id", name="idx_unique_category_book"),
     )
     op.create_table(
         "list_book_association",
@@ -45,9 +41,7 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.ForeignKeyConstraint(["book_id"], ["books.id"], ondelete="CASCADE"),
-        sa.ForeignKeyConstraint(
-            ["list_id"], ["listbooks.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["list_id"], ["listbooks.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("list_id", "book_id", name="idx_unique_list_book"),
     )

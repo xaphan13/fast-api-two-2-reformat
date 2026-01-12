@@ -45,21 +45,13 @@ def upgrade() -> None:
         "order_product_association",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("count", sa.Integer(), server_default="1", nullable=True),
-        sa.Column(
-            "unit_price", sa.Integer(), server_default="0", nullable=True
-        ),
+        sa.Column("unit_price", sa.Integer(), server_default="0", nullable=True),
         sa.Column("order_id", sa.Integer(), nullable=False),
         sa.Column("product_id", sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["order_id"], ["orders.id"], ondelete="CASCADE"
-        ),
-        sa.ForeignKeyConstraint(
-            ["product_id"], ["products.id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["order_id"], ["orders.id"], ondelete="CASCADE"),
+        sa.ForeignKeyConstraint(["product_id"], ["products.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint(
-            "order_id", "product_id", name="idx_unique_order_product"
-        ),
+        sa.UniqueConstraint("order_id", "product_id", name="idx_unique_order_product"),
     )
     op.create_index(
         op.f("ix_order_product_association_id"),

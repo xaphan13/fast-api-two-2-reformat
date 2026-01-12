@@ -33,9 +33,7 @@ def upgrade() -> None:
         sa.Column("type_work", sa.String(), nullable=False),
         sa.Column("callback_data", sa.String(), nullable=False),
         sa.Column("admin_id", sa.Integer(), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["admin_id"], ["admin_list.admin_id"], ondelete="CASCADE"
-        ),
+        sa.ForeignKeyConstraint(["admin_id"], ["admin_list.admin_id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("admin_work_id"),
         sa.UniqueConstraint("admin_work_id"),
     )

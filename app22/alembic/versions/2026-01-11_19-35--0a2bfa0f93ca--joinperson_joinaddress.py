@@ -33,9 +33,7 @@ def upgrade() -> None:
         ),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(
-        op.f("ix_joinaddress_id"), "joinaddress", ["id"], unique=False
-    )
+    op.create_index(op.f("ix_joinaddress_id"), "joinaddress", ["id"], unique=False)
     op.create_table(
         "joinperson",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -50,9 +48,7 @@ def upgrade() -> None:
         ),
         sa.PrimaryKeyConstraint("id"),
     )
-    op.create_index(
-        op.f("ix_joinperson_id"), "joinperson", ["id"], unique=False
-    )
+    op.create_index(op.f("ix_joinperson_id"), "joinperson", ["id"], unique=False)
     # ### end Alembic commands ###
 
 

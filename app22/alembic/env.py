@@ -4,7 +4,6 @@ from sqlalchemy import pool
 from alembic import context
 
 # this is the Alembic Config object, which provides
-
 # access to the values within the .ini file in use.
 
 config = context.config
@@ -20,7 +19,8 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 
 
-from app22.not_async_examples.not_async_db_conf import Base
+# from app22.not_async_examples.not_async_db_conf import Base
+from app22.db_core import Base
 
 target_metadata = Base.metadata
 
